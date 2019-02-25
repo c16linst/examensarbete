@@ -43,16 +43,29 @@ class Form extends Component {
 
   render() {
     return (
-      <form style={{display: 'flex', flexDirection: 'column', width: '150px'}} >
-        <input
-          type="email"
-          name="email"
-          placeholder="E-mail"
-          value={this.state.email}
-          onChange={(e) => this.handleInput(e)}
-        />
+      <form style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
+        <table>
+          <tbody>
+            <tr>
+              <td><label htmlFor="email" style={{fontWeight: 'bold', width: '120px'}}>E-mail:</label></td>
+              <td>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="E-mail"
+                  style={{width: '160px'}}
+                  value={this.state.email}
+                  onChange={(e) => this.handleInput(e)}
+                  required
+                />
+              </td>
+              <td>{this.state.emailValid.toString()}</td>
+            </tr>
+          </tbody>
+        </table>
         <input
           type="submit"
+          value="Registrera"
           disabled={!this.state.formValid}
         />
       </form>

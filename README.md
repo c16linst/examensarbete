@@ -1,7 +1,7 @@
 # Examensarbete
 
 ### Run the React.js app
-*Make sure you have the latest version of __Node.js__ installed*
+__!__ *Make sure you have the latest version of __Node.js__ installed*
 
 Open the terminal and access the React folder, then enter `npm start` to run the app.
 

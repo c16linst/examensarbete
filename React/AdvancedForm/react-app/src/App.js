@@ -126,7 +126,7 @@ class Form extends Component {
         <td>
         <label
           htmlFor={name}
-          style={{display: 'inline-block', width: '120px'}} >
+          style={{display: 'inline-block', width: '120px', fontWeight: 'bold'}} >
           {label}:
         </label>
         </td>

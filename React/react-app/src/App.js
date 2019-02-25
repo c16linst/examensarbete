@@ -1,26 +1,61 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
+      <Form />
+    );
+  }
+}
+
+class Form extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: '',
+      emailValid: false,
+      formValid: false
+    }
+  }
+
+  handleInput(e) {
+    const name = e.target.name;
+    const value = e.target.value;
+    const validity = e.target.validity;
+
+    this.setState(
+      { [name]: value },
+      () => { this.validate(validity) }
+    );
+  }
+
+  validate(validity) {
+    let emailValid = this.state.emailValid;
+    emailValid = (validity.valid) ? true : false;
+
+    this.setState(
+      { emailValid: emailValid,
+        formValid: emailValid }
+    );
+  }
+
+  render() {
+    return (
+      <form style={{display: 'flex', flexDirection: 'column', width: '150px'}} >
+        <input
+          type="email"
+          name="email"
+          placeholder="E-mail"
+          value={this.state.email}
+          onChange={(e) => this.handleInput(e)}
+        />
+        <input
+          type="submit"
+          disabled={!this.state.formValid}
+        />
+      </form>
     );
   }
 }

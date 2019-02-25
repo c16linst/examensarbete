@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Scenario</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body>
+  <div ng-app="">
+    <form name="form" method="post">
+      <input type="email" name="email" ng-model="email" />
+    </form>
+    <div>
+      <b>E-mail:</b> {{form.email.$valid}}
+    </div>
+  </div>
+</body>
+</html>

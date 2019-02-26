@@ -31,5 +31,10 @@
       <input type="submit" name="submit" value="Registrera" ng-disabled="form.$invalid" />
     </form>
   </div>
+  <?php if(isset($_POST['email'])) : ?>
+    <div>
+      <p>You have entered the e-mail <b><?php echo $_POST['email']; ?></b></p>
+    </div>
+  <?php endif; ?>
 </body>
 </html>

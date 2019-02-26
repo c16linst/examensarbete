@@ -2,9 +2,59 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      activePage: 'Form',
+      email: '',
+    }
+  }
+
+  updateActivePage(page) {
+    this.setState(
+      { activePage: page }
+    );
+  }
+
+  updateEmail(email) {
+    this.setState(
+      { email: email }
+    );
+  }
+
+  choosePage() {
+    var updateEmail = this.updateEmail;
+    var updateActivePage = this.updateActivePage;
+
+    if(this.state.activePage === 'Form') return <Form updateEmail={updateEmail.bind(this)} updateActivePage={updateActivePage.bind(this)} />
+    if(this.state.activePage === 'Welcome') return <Welcome email={this.state.email} />
+  }
+
   render() {
     return (
-      <Form />
+      <div>
+        {this.choosePage()}
+      </div>
+    );
+  }
+}
+
+class Welcome extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: this.props.email,
+      activePage: false,
+    }
+  }
+
+  render() {
+    return (
+      <div>
+        <p>You have entered the email <b>{this.state.email}</b></p>
+      </div>
     );
   }
 }
@@ -16,7 +66,7 @@ class Form extends Component {
     this.state = {
       email: '',
       emailValid: false,
-      formValid: false
+      formValid: false,
     }
   }
 
@@ -41,9 +91,16 @@ class Form extends Component {
     );
   }
 
+  checkState() {
+    if(this.state.emailValid) {
+      this.props.updateEmail(this.state.email);
+      this.props.updateActivePage('Welcome');
+    }
+  }
+
   render() {
     return (
-      <form style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
+      <form onSubmit={() => this.checkState()} style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
         <table>
           <tbody>
             <tr>

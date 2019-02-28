@@ -20,15 +20,15 @@
 </head>
 <body>
   <div ng-app="">
-    <form name="form" method="post" ng-model="form">
+    <form name="form" action="index.php" method="post" ng-model="form">
       <table>
         <tr>
           <td><label for="email">E-mail:</label></td>
-          <td><input type="email" name="email" ng-model="email" placeholder="E-mail" required /></td>
+          <td><input id="email-input" type="email" name="email" ng-model="email" placeholder="E-mail" required /></td>
           <td>{{form.email.$valid}}</td>
         </tr>
       </table>
-      <input type="submit" name="submit" value="Registrera" ng-disabled="form.$invalid" />
+      <input id="submit-form" type="submit" name="submit" value="Registrera" />
     </form>
   </div>
   <?php if(isset($_POST['email'])) : ?>

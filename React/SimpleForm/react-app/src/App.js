@@ -6,35 +6,36 @@ class App extends Component {
     super(props);
 
     this.state = {
-      activePage: 'Form',
+      welcomeVisibility: this.setWelcomeVisibility(),
       email: '',
     }
   }
 
-  updateActivePage(page) {
-    this.setState(
-      { activePage: page }
-    );
+  setWelcomeVisibility() {
+    if(localStorage.getItem('WelcomeVisibility') === 'true') return true;
+    else return false;
   }
 
   updateEmail(email) {
+    localStorage.setItem('email', email);
+
     this.setState(
       { email: email }
     );
   }
 
-  choosePage() {
-    var updateEmail = this.updateEmail;
-    var updateActivePage = this.updateActivePage;
-
-    if(this.state.activePage === 'Form') return <Form updateEmail={updateEmail.bind(this)} updateActivePage={updateActivePage.bind(this)} />
-    if(this.state.activePage === 'Welcome') return <Welcome email={this.state.email} />
+  welcomeMsg() {
+    if(this.state.welcomeVisibility === true) return <Welcome email={this.state.email} />
   }
 
   render() {
+    var updateEmail = this.updateEmail;
+    var setWelcomeVisibility = this.setWelcomeVisibility;
+
     return (
       <div>
-        {this.choosePage()}
+        <Form updateEmail={updateEmail.bind(this)} setWelcomeVisibility={setWelcomeVisibility.bind(this)} />
+        {this.welcomeMsg()}
       </div>
     );
   }
@@ -45,8 +46,7 @@ class Welcome extends Component {
     super(props);
 
     this.state = {
-      email: this.props.email,
-      activePage: false,
+      email: localStorage.getItem('email'),
     }
   }
 
@@ -94,7 +94,8 @@ class Form extends Component {
   checkState() {
     if(this.state.emailValid) {
       this.props.updateEmail(this.state.email);
-      this.props.updateActivePage('Welcome');
+      this.props.setWelcomeVisibility(true);
+      localStorage.setItem('WelcomeVisibility', true);
     }
   }
 

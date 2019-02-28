@@ -100,13 +100,22 @@ class Form extends Component {
 
   render() {
     return (
-      <form onSubmit={() => this.checkState()} style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
+      <form
+        onSubmit={() => this.checkState()}
+        style={{display: 'flex', flexDirection: 'column', width: '150px'}}>
         <table>
           <tbody>
             <tr>
-              <td><label htmlFor="email" style={{fontWeight: 'bold', width: '120px'}}>E-mail:</label></td>
+              <td>
+                <label
+                  htmlFor="email"
+                  style={{fontWeight: 'bold', width: '120px'}}>
+                  E-mail:
+                </label>
+              </td>
               <td>
                 <input
+                  id="email-input"
                   type="email"
                   name="email"
                   placeholder="E-mail"
@@ -121,9 +130,9 @@ class Form extends Component {
           </tbody>
         </table>
         <input
+          id="submit-form"
           type="submit"
           value="Registrera"
-          disabled={!this.state.formValid}
         />
       </form>
     );

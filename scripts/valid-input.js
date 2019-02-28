@@ -25,7 +25,7 @@ $(document).ready(function() {
     localStorage.setItem('data', JSON.stringify(data));
   }
 
-	if(scriptsRun <= run) {
+  if(scriptsRun <= run) {
     $('#email-input').focus();
     $('#email-input').attr('value', 'test@example.com');
     $('#email-input').blur();
@@ -36,5 +36,5 @@ $(document).ready(function() {
 $('#submit-form').on('click', function() {
   scriptsRun++;
   localStorage.setItem('StartTime', Date.now());
-	localStorage.setItem('ScriptsRun', scriptsRun);
+  localStorage.setItem('ScriptsRun', scriptsRun);
 });

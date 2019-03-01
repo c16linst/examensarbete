@@ -6,54 +6,55 @@ class App extends Component {
     super(props);
 
     this.state = {
-      welcomeVisibility: this.setWelcomeVisibility(),
-      email: '',
+      resultVisibility: this.setResultVisibility(),
+      search: '',
     }
   }
 
-  setWelcomeVisibility() {
-    if(localStorage.getItem('WelcomeVisibility') === 'true') return true;
+  setResultVisibility() {
+    if(localStorage.getItem('ResultVisibility') === 'true') return true;
     else return false;
   }
 
-  updateEmail(email) {
-    localStorage.setItem('email', email);
+  updateSearch(search) {
+    localStorage.setItem('search', search);
 
     this.setState(
-      { email: email }
+      { search: search }
     );
   }
 
-  welcomeMsg() {
-    if(this.state.welcomeVisibility === true) return <Welcome email={this.state.email} />
+  resultMsg() {
+    if(this.state.resultVisibility === true) return <Result search={this.state.search} />
   }
 
   render() {
-    var updateEmail = this.updateEmail;
-    var setWelcomeVisibility = this.setWelcomeVisibility;
+    var updateSearch = this.updateSearch;
+    var setResultVisibility = this.setResultVisibility;
 
     return (
       <div>
-        <Form updateEmail={updateEmail.bind(this)} setWelcomeVisibility={setWelcomeVisibility.bind(this)} />
-        {this.welcomeMsg()}
+        <Form updateSearch={updateSearch.bind(this)} setResultVisibility={setResultVisibility.bind(this)} />
+        {this.resultMsg()}
       </div>
     );
   }
 }
 
-class Welcome extends Component {
+class Result extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      email: localStorage.getItem('email'),
+      search: localStorage.getItem('search'),
     }
   }
 
   render() {
     return (
       <div>
-        <p>You have entered the email <b>{this.state.email}</b></p>
+        <h4>Results:</h4>
+        {this.state.search}
       </div>
     );
   }
@@ -64,8 +65,8 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      email: '',
-      emailValid: false,
+      search: '',
+      searchValid: false,
       formValid: false,
     }
   }
@@ -82,20 +83,20 @@ class Form extends Component {
   }
 
   validate(validity) {
-    let emailValid = this.state.emailValid;
-    emailValid = (validity.valid) ? true : false;
+    let searchValid = this.state.searchValid;
+    searchValid = (validity.valid) ? true : false;
 
     this.setState(
-      { emailValid: emailValid,
-        formValid: emailValid }
+      { searchValid: searchValid,
+        formValid: searchValid }
     );
   }
 
   checkState() {
-    if(this.state.emailValid) {
-      this.props.updateEmail(this.state.email);
-      this.props.setWelcomeVisibility(true);
-      localStorage.setItem('WelcomeVisibility', true);
+    if(this.state.searchValid) {
+      this.props.updateSearch(this.state.search);
+      this.props.setResultVisibility(true);
+      localStorage.setItem('ResultVisibility', true);
     }
   }
 
@@ -108,32 +109,25 @@ class Form extends Component {
           <tbody>
             <tr>
               <td>
-                <label
-                  htmlFor="email"
-                  style={{fontWeight: 'bold', width: '120px'}}>
-                  E-mail:
-                </label>
-              </td>
-              <td>
                 <input
-                  id="email-input"
-                  type="email"
-                  name="email"
-                  placeholder="E-mail"
+                  id="search-input"
+                  type="search"
+                  name="search"
+                  placeholder="Search..."
                   style={{width: '160px'}}
-                  value={this.state.email}
+                  value={this.state.search}
                   onChange={(e) => this.handleInput(e)}
                   required
                 />
               </td>
-              <td>{this.state.emailValid.toString()}</td>
+              <td>{this.state.searchValid.toString()}</td>
             </tr>
           </tbody>
         </table>
         <input
           id="submit-form"
           type="submit"
-          value="Registrera"
+          value="Search"
         />
       </form>
     );

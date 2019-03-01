@@ -23,18 +23,17 @@
     <form name="form" action="index.php" method="post" ng-model="form">
       <table>
         <tr>
-          <td><label for="email">E-mail:</label></td>
-          <td><input id="email-input" type="email" name="email" ng-model="email" placeholder="E-mail" required /></td>
-          <td>{{form.email.$valid}}</td>
+          <td><input id="search-input" type="text" name="search" ng-model="search" placeholder="Search..." required /></td>
+          <td>{{form.search.$valid}}</td>
         </tr>
       </table>
-      <input id="submit-form" type="submit" name="submit" value="Registrera" />
+      <input id="submit-form" type="submit" name="submit" value="Search" />
     </form>
   </div>
-  <?php if(isset($_POST['email'])) : ?>
+  <?php if(isset($_POST['search'])) : ?>
     <?php require_once('dbConn.php'); ?>
     <div>
-      <p>You have entered the e-mail <b><?php echo $_POST['email']; ?></b></p>
+      <p>You have entered the e-mail <b><?php echo $_POST['search']; ?></b></p>
     </div>
   <?php endif; ?>
 </body>

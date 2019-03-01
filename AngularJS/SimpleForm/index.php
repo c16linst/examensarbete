@@ -32,6 +32,7 @@
     </form>
   </div>
   <?php if(isset($_POST['email'])) : ?>
+    <?php require_once('dbConn.php'); ?>
     <div>
       <p>You have entered the e-mail <b><?php echo $_POST['email']; ?></b></p>
     </div>

@@ -20,6 +20,7 @@
 </head>
 <body>
   <?php if(isset($_POST['username'])) : ?>
+    <?php require_once('dbConn.php'); ?>
     <h1>Welcome <?php echo $_POST['fname'] . ' ' . $_POST['lname']; ?>!</h1>
     <p><b>Username:</b> <?php echo $_POST['username']; ?>, <?php echo $_POST['age'] ?> y/o</p>
     <p><b>E-mail:</b> <?php echo $_POST['email']; ?></p>
@@ -57,6 +58,11 @@
             <td>{{form.phone.$valid}}</td>
           </tr>
           <tr>
+            <td><label for="website">Website:</label></td>
+            <td><input type="url" name="website" placeholder="http://www.exampleweb.ex" ng-model="website" required /></td>
+            <td>{{form.website.$valid}}</td>
+          </tr>
+          <tr>
             <td><label for="age">Age:</label></td>
             <td><input type="number" name="age" placeholder="23" ng-model="age" required /></td>
             <td>{{form.age.$valid}}</td>
@@ -72,9 +78,9 @@
             <td>{{form.zipcode.$valid}}</td>
           </tr>
           <tr>
-            <td><label for="website">Website:</label></td>
-            <td><input type="url" name="website" placeholder="http://www.exampleweb.ex" ng-model="website" required /></td>
-            <td>{{form.website.$valid}}</td>
+            <td><label for="country">Country:</label></td>
+            <td><input type="text" name="country" placeholder="Sweden" ng-model="country" required /></td>
+            <td>{{form.country.$valid}}</td>
           </tr>
           <tr>
             <td><label for="password">Password:</label></td>

@@ -20,7 +20,7 @@
 </head>
 <body>
   <div ng-app="">
-    <form name="form" action="index.php" method="post" ng-model="form">
+    <form name="form" action="search_index.php" method="post" ng-model="form">
       <table>
         <tr>
           <td><input id="search-input" type="text" name="search" ng-model="search" placeholder="Search..." required /></td>

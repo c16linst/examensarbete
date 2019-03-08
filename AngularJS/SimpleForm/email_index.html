@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <title>Scenario</title>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
   <style>
     * {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
@@ -17,21 +16,34 @@
       width: 160px;
     }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
 </head>
 <body>
-  <div ng-app="">
+  <div ng-app="emailValidation" ng-controller="emailController">
     <form name="form" action="email_index.html" method="post" ng-model="form">
       <table>
         <tr>
-          <td><input id="email-input" type="text" name="email" ng-model="email" placeholder="example@test.com" required /></td>
+          <td><input id="email-input" type="email" name="email" ng-model="email" ng-change="test();" placeholder="example@test.com" required /></td>
           <td>{{form.email.$valid}}</td>
         </tr>
       </table>
       <input id="submit-form" type="submit" name="submit" value="Submit" />
     </form>
+    <p>You have entered the e-mail <b>{{email}}</b></p>
   </div>
-    <div>
-      <p>You have entered the e-mail <b>{{form.email}}</b></p>
-    </div>
+  <script type="text/javascript">
+    var app = angular.module('emailValidation', []);
+    app.controller('emailController', function($scope) {
+      console.log($scope);
+
+      $scope.test = function() {
+        var email = $scope.email;
+      }
+
+      // $scope.form.$valid.change(function() {
+      //   console.log($scope.form.$valid);
+      // });
+    });
+  </script>
 </body>
 </html>

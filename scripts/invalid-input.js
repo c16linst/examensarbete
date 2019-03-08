@@ -26,19 +26,11 @@ $(document).ready(function() {
     var createFile = function(input) {
       var blob = new Blob([input], { type: 'text/plain' });
       textFile = window.URL.createObjectURL(blob);
-<<<<<<< HEAD
-
-=======
       
->>>>>>> 7ac097630a427f5e6cbdb92035c502bb3b6a05bb
       return textFile;
     };
 
     var a = document.createElement('a');
-<<<<<<< HEAD
-=======
-
->>>>>>> 7ac097630a427f5e6cbdb92035c502bb3b6a05bb
     a.setAttribute('download', 'data.csv');
     a.setAttribute('href', createFile(data));
     document.body.appendChild(a);

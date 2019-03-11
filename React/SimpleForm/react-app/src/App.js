@@ -6,36 +6,35 @@ class App extends Component {
     super(props);
 
     this.state = {
-      resultVisibility: this.setResultVisibility(),
-      search: '',
+      welcomeVisibility: this.setWelcomeVisibility(),
+      email: '',
     }
   }
 
-  setResultVisibility() {
-    if(localStorage.getItem('ResultVisibility') === 'true') return true;
+  setWelcomeVisibility() {
+    if(localStorage.getItem('welcomeVisibility') === 'true') return true;
     else return false;
   }
 
-  updateSearch(search) {
-    localStorage.setItem('search', search);
+  updateEmail(email) {
+    localStorage.setItem('email', email);
 
     this.setState(
-      { search: search }
+      { email: email }
     );
   }
 
   resultMsg() {
-    if(this.state.resultVisibility === true) return <Result search={this.state.search} />
+    if(this.state.welcomeVisibility === true) return <Result email={this.state.email} />
   }
 
   render() {
-    var updateSearch = this.updateSearch;
-    var setResultVisibility = this.setResultVisibility;
+    var updateEmail = this.updateEmail;
+    var setWelcomeVisibility = this.setWelcomeVisibility;
 
     return (
-      <div>
-        <Form updateSearch={updateSearch.bind(this)} setResultVisibility={setResultVisibility.bind(this)} />
-        {this.resultMsg()}
+      <div className="App">
+        <Form updateEmail={updateEmail.bind(this)} setWelcomeVisibility={setWelcomeVisibility.bind(this)} />
       </div>
     );
   }
@@ -46,7 +45,7 @@ class Result extends Component {
     super(props);
 
     this.state = {
-      search: localStorage.getItem('search'),
+      email: localStorage.getItem('email'),
     }
   }
 
@@ -54,7 +53,7 @@ class Result extends Component {
     return (
       <div>
         <h4>Results:</h4>
-        {this.state.search}
+        {this.state.email}
       </div>
     );
   }
@@ -65,8 +64,8 @@ class Form extends Component {
     super(props);
 
     this.state = {
-      search: '',
-      searchValid: false,
+      email: '',
+      emailValid: false,
       formValid: false,
     }
   }
@@ -83,20 +82,20 @@ class Form extends Component {
   }
 
   validate(validity) {
-    let searchValid = this.state.searchValid;
-    searchValid = (validity.valid) ? true : false;
+    let emailValid = this.state.emailValid;
+    emailValid = (validity.valid) ? true : false;
 
     this.setState(
-      { searchValid: searchValid,
-        formValid: searchValid }
+      { emailValid: emailValid,
+        formValid: emailValid }
     );
   }
 
   checkState() {
-    if(this.state.searchValid) {
-      this.props.updateSearch(this.state.search);
-      this.props.setResultVisibility(true);
-      localStorage.setItem('ResultVisibility', true);
+    if(this.state.emailValid) {
+      this.props.updateEmail(this.state.email);
+      this.props.setWelcomeVisibility(true);
+      localStorage.setItem('welcomeVisibility', true);
     }
   }
 
@@ -110,24 +109,24 @@ class Form extends Component {
             <tr>
               <td>
                 <input
-                  id="search-input"
-                  type="search"
-                  name="search"
-                  placeholder="Search..."
+                  id="email-input"
+                  type="email"
+                  name="email"
+                  placeholder="example@test.com"
                   style={{width: '160px'}}
-                  value={this.state.search}
+                  value={this.state.email}
                   onChange={(e) => this.handleInput(e)}
                   required
                 />
               </td>
-              <td>{this.state.searchValid.toString()}</td>
+              <td>{this.state.emailValid.toString()}</td>
             </tr>
           </tbody>
         </table>
         <input
           id="submit-form"
           type="submit"
-          value="Search"
+          value="Submit"
         />
       </form>
     );

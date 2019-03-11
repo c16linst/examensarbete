@@ -27,9 +27,29 @@ $(document).ready(function() {
 
   if(scriptsRun <= run) {
     $('#email-input').focus();
-    $('#email-input').attr('value', 'test@example.com');
+    $('#email-input').attr('value', 'example@test.com');
     $('#email-input').blur();
     $('#submit-form').click();
+  } else if(scriptsRun > run) {
+    var textFile = null;
+
+    data = data.toString();
+    data = data.replace(/([\[\]])/g, '');
+    data = data.replace(/(\,)/g, '\n');
+
+    var createFile = function(input) {
+      var blob = new Blob([input], { type: 'text/plain' });
+      textFile = window.URL.createObjectURL(blob);
+
+      return textFile;
+    };
+
+    var a = document.createElement('a');
+    a.setAttribute('download', 'data.csv');
+    a.setAttribute('href', createFile(data));
+    document.body.appendChild(a);
+
+    a.click();
   }
 });
 

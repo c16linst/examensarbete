@@ -36,6 +36,8 @@ class Form extends Component {
       searchValid: false,
       formValid: false
     }
+
+    this.formRef = React.createRef();
   }
 
   handleInput(e) {
@@ -180,9 +182,19 @@ class Form extends Component {
     }
   }
 
+  handleSubmit(e) {
+    e.preventDefault();
+
+    var form = this.formRef.current;
+    if(form.checkValidity()) form.submit();
+  }
+
   render() {
     return (
-      <form style={{display: 'flex', flexDirection: 'column', width: '150px'}} >
+      <form
+        style={{display: 'flex', flexDirection: 'column', width: '150px'}}
+        ref={this.formRef}
+        noValidate >
         <table>
           <tbody>
             {this.tablerow('text', 'Anything', 'Text')}
@@ -201,6 +213,7 @@ class Form extends Component {
           type="submit"
           id="submit-form"
           value="Register"
+          onClick={(e) => this.handleSubmit(e)}
         />
       </form>
     );

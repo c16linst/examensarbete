@@ -16,24 +16,24 @@ class Form extends Component {
     this.state = {
       username: '',
       email: '',
-      fname: '',
-      lname: '',
-      phone: '',
-      age: '',
-      address: '',
-      zipcode: '',
-      website: '',
+      tel: '',
+      url: '',
+      number: '',
       password: '',
-      usernameValid: false,
+      date: '',
+      month: '',
+      week: '',
+      search: '',
+      textValid: false,
       emailValid: false,
-      fnameValid: false,
-      lnameValid: false,
-      phoneValid: false,
-      ageValid: false,
-      addressValid: false,
-      zipcodeValid: false,
-      websiteValid: false,
+      telValid: false,
+      urlValid: false,
+      numberValid: false,
       passwordValid: false,
+      dateValid: false,
+      monthValid: false,
+      weekValid: false,
+      searchValid: false,
       formValid: false
     }
   }
@@ -50,82 +50,88 @@ class Form extends Component {
   }
 
   validate(name, validity) {
-    let usernameValid = this.state.usernameValid;
+    let textValid = this.state.textValid;
     let emailValid = this.state.emailValid;
-    let fnameValid = this.state.fnameValid;
-    let lnameValid = this.state.lnameValid;
-    let phoneValid = this.state.phoneValid;
-    let ageValid = this.state.ageValid;
-    let addressValid = this.state.addressValid;
-    let zipcodeValid = this.state.zipcodeValid;
-    let websiteValid = this.state.websiteValid;
+    let telValid = this.state.telValid;
+    let urlValid = this.state.urlValid;
+    let numberValid = this.state.numberValid;
     let passwordValid = this.state.passwordValid;
+    let dateValid = this.state.dateValid;
+    let monthValid = this.state.monthValid;
+    let weekValid = this.state.weekValid;
+    let searchValid = this.state.searchValid;
 
     switch(name) {
-      case 'username':
-        usernameValid = (validity.valid) ? true : false;
+      case 'text':
+        textValid = (validity.valid) ? true : false;
         break;
       case 'email':
         emailValid = (validity.valid) ? true : false;
         break;
-      case 'fname':
-        fnameValid = (validity.valid) ? true : false;
+      case 'tel':
+        telValid = (validity.valid) ? true : false;
         break;
-      case 'lname':
-        lnameValid = (validity.valid) ? true : false;
+      case 'url':
+        urlValid = (validity.valid) ? true : false;
         break;
-      case 'phone':
-        phoneValid = (validity.valid) ? true : false;
-        break;
-      case 'age':
-        ageValid = (validity.valid) ? true : false;
-        break;
-      case 'address':
-        addressValid = (validity.valid) ? true : false;
-        break;
-      case 'zipcode':
-        zipcodeValid = (validity.valid) ? true : false;
-        break;
-      case 'website':
-        websiteValid = (validity.valid) ? true : false;
+      case 'number':
+        numberValid = (validity.valid) ? true : false;
         break;
       case 'password':
         passwordValid = (validity.valid) ? true : false;
+        break;
+      case 'datetime-local':
+        dateValid = (validity.valid) ? true : false;
+        break;
+      case 'month':
+        monthValid = (validity.valid) ? true : false;
+        break;
+      case 'week':
+        weekValid = (validity.valid) ? true : false;
+        break;
+      case 'search':
+        searchValid = (validity.valid) ? true : false;
         break;
       default:
         break;
     }
 
     this.setState(
-      { usernameValid: usernameValid,
+      { textValid: textValid,
         emailValid: emailValid,
-        fnameValid: fnameValid,
-        lnameValid: lnameValid,
-        phoneValid: phoneValid,
-        ageValid: ageValid,
-        addressValid: addressValid,
-        zipcodeValid: zipcodeValid,
-        websiteValid: websiteValid,
+        telValid: telValid,
+        urlValid: urlValid,
+        numberValid: numberValid,
         passwordValid: passwordValid,
-        formValid:  this.state.usernameValid &&
+        dateValid: dateValid,
+        monthValid: monthValid,
+        weekValid: weekValid,
+        searchValid: searchValid,
+        formValid:  this.state.textValid &&
                     this.state.emailValid &&
-                    this.state.fnameValid &&
-                    this.state.lnameValid &&
-                    this.state.phoneValid &&
-                    this.state.ageValid &&
-                    this.state.addressValid &&
-                    this.state.zipcodeValid &&
-                    this.state.websiteValid &&
-                    this.state.passwordValid }
+                    this.state.telValid &&
+                    this.state.urlValid &&
+                    this.state.numberValid &&
+                    this.state.passwordValid &&
+                    this.state.dateValid &&
+                    this.state.monthValid &&
+                    this.state.weekValid &&
+                    this.state.searchValid }
     );
   }
 
-  tablerow(type, name, placeholder, label) {
+  tablerow(type, placeholder, label, options) {
+    var width = '160px';
+    if(options === 'search') width = '168px';
+
+    var id = type;
+    if(options === 'date') id = 'date';
+
     return (
       <tr>
         <td>
         <label
-          htmlFor={name}
+          htmlFor={type}
           style={{display: 'inline-block', width: '120px', fontWeight: 'bold'}} >
           {label}:
         </label>
@@ -133,43 +139,44 @@ class Form extends Component {
         <td>
           <input
             type={type}
-            name={name}
+            id={id}
+            name={type}
             placeholder={placeholder}
             value={this.state.name}
             onChange={(e) => this.handleInput(e)}
-            style={{width: '160px'}}
+            style={{width: width}}
             required
           />
         </td>
-        <td>
-          {this.inputValidity(name)}
-        </td>
+        <td>{this.inputValidity(type)}</td>
       </tr>
     );
   }
 
-  inputValidity(name) {
-    switch(name) {
-      case 'username':
-        return this.state.usernameValid.toString();
+  inputValidity(type) {
+    switch(type) {
+      case 'text':
+        return this.state.textValid.toString();
       case 'email':
         return this.state.emailValid.toString();
-      case 'fname':
-        return this.state.fnameValid.toString();
-      case 'lname':
-        return this.state.lnameValid.toString();
-      case 'phone':
-        return this.state.phoneValid.toString();
-      case 'age':
-        return this.state.ageValid.toString();
-      case 'address':
-        return this.state.addressValid.toString();
-      case 'zipcode':
-        return this.state.zipcodeValid.toString();
-      case 'website':
-        return this.state.websiteValid.toString();
+      case 'tel':
+        return this.state.telValid.toString();
+      case 'url':
+        return this.state.urlValid.toString();
+      case 'number':
+        return this.state.numberValid.toString();
       case 'password':
         return this.state.passwordValid.toString();
+      case 'datetime-local':
+        return this.state.dateValid.toString();
+      case 'month':
+        return this.state.monthValid.toString();
+      case 'week':
+        return this.state.weekValid.toString();
+      case 'search':
+        return this.state.searchValid.toString();
+      default:
+        break;
     }
   }
 
@@ -178,22 +185,22 @@ class Form extends Component {
       <form style={{display: 'flex', flexDirection: 'column', width: '150px'}} >
         <table>
           <tbody>
-            {this.tablerow('text', 'username', 'Username123', 'Username')}
-            {this.tablerow('email', 'email', 'example@email.com', 'E-mail')}
-            {this.tablerow('text', 'fname', 'John', 'First name')}
-            {this.tablerow('text', 'lname', 'Doe', 'Last name')}
-            {this.tablerow('text', 'phone', '+4676 123 45 67', 'Phone number')}
-            {this.tablerow('number', 'age', '23', 'Age')}
-            {this.tablerow('text', 'address', 'Addressway 10', 'Address')}
-            {this.tablerow('number', 'zipcode', '12345', 'Zip code')}
-            {this.tablerow('url', 'website', 'http://www.exampleweb.ex', 'Website')}
-            {this.tablerow('password', 'password', '', 'Password')}
+            {this.tablerow('text', 'Anything', 'Text')}
+            {this.tablerow('email', 'example@test.com', 'E-mail')}
+            {this.tablerow('tel', '+4676 123 45 67', 'Telephone')}
+            {this.tablerow('url', 'http://www.exampleweb.ex', 'URL')}
+            {this.tablerow('number', '12345', 'Number')}
+            {this.tablerow('password', 'Anything', 'Password')}
+            {this.tablerow('datetime-local', '2019-01-01T09:30', 'Date-time', 'date')}
+            {this.tablerow('month', '2019-01', 'Month')}
+            {this.tablerow('week', '2019-W01', 'Week')}
+            {this.tablerow('search', 'Anything', 'Search', 'search')}
           </tbody>
         </table>
         <input
           type="submit"
-          value="Registrera"
-          disabled={!this.state.formValid}
+          id="submit-form"
+          value="Register"
         />
       </form>
     );

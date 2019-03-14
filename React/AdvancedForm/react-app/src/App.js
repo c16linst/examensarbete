@@ -23,18 +23,7 @@ class Form extends Component {
       date: '',
       month: '',
       week: '',
-      search: '',
-      textValid: false,
-      emailValid: false,
-      telValid: false,
-      urlValid: false,
-      numberValid: false,
-      passwordValid: false,
-      dateValid: false,
-      monthValid: false,
-      weekValid: false,
-      searchValid: false,
-      formValid: false
+      search: ''
     }
 
     this.formRef = React.createRef();
@@ -43,83 +32,8 @@ class Form extends Component {
   handleInput(e) {
     const name = e.target.name;
     const value = e.target.value;
-    const validity = e.target.validity;
 
-    this.setState(
-      { [name]: value },
-      () => { this.validate(name, validity) }
-    );
-  }
-
-  validate(name, validity) {
-    let textValid = this.state.textValid;
-    let emailValid = this.state.emailValid;
-    let telValid = this.state.telValid;
-    let urlValid = this.state.urlValid;
-    let numberValid = this.state.numberValid;
-    let passwordValid = this.state.passwordValid;
-    let dateValid = this.state.dateValid;
-    let monthValid = this.state.monthValid;
-    let weekValid = this.state.weekValid;
-    let searchValid = this.state.searchValid;
-
-    switch(name) {
-      case 'text':
-        textValid = (validity.valid) ? true : false;
-        break;
-      case 'email':
-        emailValid = (validity.valid) ? true : false;
-        break;
-      case 'tel':
-        telValid = (validity.valid) ? true : false;
-        break;
-      case 'url':
-        urlValid = (validity.valid) ? true : false;
-        break;
-      case 'number':
-        numberValid = (validity.valid) ? true : false;
-        break;
-      case 'password':
-        passwordValid = (validity.valid) ? true : false;
-        break;
-      case 'datetime-local':
-        dateValid = (validity.valid) ? true : false;
-        break;
-      case 'month':
-        monthValid = (validity.valid) ? true : false;
-        break;
-      case 'week':
-        weekValid = (validity.valid) ? true : false;
-        break;
-      case 'search':
-        searchValid = (validity.valid) ? true : false;
-        break;
-      default:
-        break;
-    }
-
-    this.setState(
-      { textValid: textValid,
-        emailValid: emailValid,
-        telValid: telValid,
-        urlValid: urlValid,
-        numberValid: numberValid,
-        passwordValid: passwordValid,
-        dateValid: dateValid,
-        monthValid: monthValid,
-        weekValid: weekValid,
-        searchValid: searchValid,
-        formValid:  this.state.textValid &&
-                    this.state.emailValid &&
-                    this.state.telValid &&
-                    this.state.urlValid &&
-                    this.state.numberValid &&
-                    this.state.passwordValid &&
-                    this.state.dateValid &&
-                    this.state.monthValid &&
-                    this.state.weekValid &&
-                    this.state.searchValid }
-    );
+    this.setState({ [name]: value });
   }
 
   tablerow(type, placeholder, label, options) {
@@ -150,42 +64,14 @@ class Form extends Component {
             required
           />
         </td>
-        <td>{this.inputValidity(type)}</td>
       </tr>
     );
-  }
-
-  inputValidity(type) {
-    switch(type) {
-      case 'text':
-        return this.state.textValid.toString();
-      case 'email':
-        return this.state.emailValid.toString();
-      case 'tel':
-        return this.state.telValid.toString();
-      case 'url':
-        return this.state.urlValid.toString();
-      case 'number':
-        return this.state.numberValid.toString();
-      case 'password':
-        return this.state.passwordValid.toString();
-      case 'datetime-local':
-        return this.state.dateValid.toString();
-      case 'month':
-        return this.state.monthValid.toString();
-      case 'week':
-        return this.state.weekValid.toString();
-      case 'search':
-        return this.state.searchValid.toString();
-      default:
-        break;
-    }
   }
 
   handleSubmit(e) {
     e.preventDefault();
 
-    var form = this.formRef.current;
+    let form = this.formRef.current;
     if(form.checkValidity()) form.submit();
   }
 

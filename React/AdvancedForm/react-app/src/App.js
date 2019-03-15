@@ -38,7 +38,11 @@ class Form extends Component {
       {
         type: 'tel',
         placeholder: '0701234567',
+<<<<<<< HEAD
         label: 'Phone'
+=======
+        label: 'URL'
+>>>>>>> 9a5ac251ceb400ff9b03e5ad5f6a66cf916583f3
       },
       {
         type: 'url',

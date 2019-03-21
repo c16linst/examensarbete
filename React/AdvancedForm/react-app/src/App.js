@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import { inputTypes } from './forms.js';
 
 class App extends Component {
   render() {
@@ -24,67 +25,17 @@ class Form extends Component {
   }
 
   renderTableRows() {
-    const rowContent = [
-      {
-        type: 'text',
-        placeholder: 'Anything',
-        label: 'Text'
-      },
-      {
-        type: 'email',
-        placeholder: 'example@test.com',
-        label: 'E-mail'
-      },
-      {
-        type: 'tel',
-        placeholder: '0701234567',
-        label: 'Phone'
-      },
-      {
-        type: 'url',
-        placeholder: 'http://www.exampleweb.ex',
-        label: 'URL'
-      },
-      {
-        type: 'number',
-        placeholder: '12345',
-        label: 'Number'
-      },
-      {
-        type: 'password',
-        placeholder: 'Anything',
-        label: 'Password'
-      },
-      {
-        type: 'datetime-local',
-        placeholder: '2019-01-01T09:30',
-        label: 'Date-time'
-      },
-      {
-        type: 'month',
-        placeholder: '2019-01',
-        label: 'Month'
-      },
-      {
-        type: 'week',
-        placeholder: '2019-W01',
-        label: 'Week'
-      },
-      {
-        type: 'search',
-        placeholder: 'Anything',
-        label: 'Search'
-      }
-    ];
-
-    const tableRows = rowContent.map((tableRow) =>
-      <TableRow
-        key={tableRow.type}
-        type={tableRow.type}
-        placeholder={tableRow.placeholder}
-        label={tableRow.label} />
-    );
-
+    const tableRows = Object.keys(inputTypes).map(function(key) {
+      const inputObject = inputTypes[key];
+      return (
+        <TableRow
+        key={inputObject.type}
+        type={inputObject.type}
+        placeholder={inputObject.placeholder}
+        label={inputObject.label} />
+      );
+    });
+    
     return tableRows;
   }
 

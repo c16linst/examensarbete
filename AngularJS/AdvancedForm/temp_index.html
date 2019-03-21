@@ -33,6 +33,7 @@
               name="text"
               placeholder="Anything"
               ng-model="text"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.text.$valid}}</td>
@@ -46,6 +47,7 @@
               name="email"
               placeholder="example@test.com"
               ng-model="email"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.email.$valid}}</td>
@@ -59,6 +61,7 @@
               name="tel"
               placeholder="+4676 123 45 67"
               ng-model="tel"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.tel.$valid}}</td>
@@ -72,6 +75,7 @@
               name="url"
               placeholder="http://www.exampleweb.ex"
               ng-model="url"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.url.$valid}}</td>
@@ -85,6 +89,7 @@
               name="number"
               placeholder="12345"
               ng-model="number"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.number.$valid}}</td>
@@ -98,6 +103,7 @@
               name="password"
               placeholder="Anything"
               ng-model="password"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.password.$valid}}</td>
@@ -111,6 +117,7 @@
               name="date"
               placeholder="2019-01-01T09:30"
               ng-model="date"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.date.$valid}}</td>
@@ -124,6 +131,7 @@
               name="month"
               placeholder="2019-01"
               ng-model="month"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.month.$valid}}</td>
@@ -137,6 +145,7 @@
               name="week"
               placeholder="2019-W01"
               ng-model="week"
+              ng-model-options="{updateOn: 'submit'}"
               required />
           </td>
           <td>{{form.week.$valid}}</td>
@@ -150,6 +159,7 @@
               name="search"
               placeholder="Anything"
               ng-model="search"
+              ng-model-options="{updateOn: 'submit'}"
               style="width:168px;"
               required />
           </td>

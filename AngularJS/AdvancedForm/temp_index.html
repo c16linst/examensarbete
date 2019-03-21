@@ -22,61 +22,143 @@
 </head>
 <body>
   <div ng-app="">
-    <form name="form" action="temp_index.html" method="post" ng-model="form">
+    <form name="form" ng-model="form">
       <table>
         <tr>
           <td><label for="text">Text:</label></td>
-          <td><input id="text" type="text" name="text" placeholder="Anything" ng-model="text" required /></td>
+          <td>
+            <input
+              id="text"
+              type="text"
+              name="text"
+              placeholder="Anything"
+              ng-model="text"
+              required />
+          </td>
           <td>{{form.text.$valid}}</td>
         </tr>
         <tr>
           <td><label for="email">E-mail:</label></td>
-          <td><input id="email" type="email" name="email" placeholder="example@test.com" ng-model="email" required /></td>
+          <td>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="example@test.com"
+              ng-model="email"
+              required />
+          </td>
           <td>{{form.email.$valid}}</td>
         </tr>
         <tr>
           <td><label for="tel">Telephone:</label></td>
-          <td><input id="tel" type="tel" name="tel" placeholder="+4676 123 45 67" ng-model="tel" required /></td>
+          <td>
+            <input
+              id="tel"
+              type="tel"
+              name="tel"
+              placeholder="+4676 123 45 67"
+              ng-model="tel"
+              required />
+          </td>
           <td>{{form.tel.$valid}}</td>
         </tr>
         <tr>
           <td><label for="url">URL:</label></td>
-          <td><input id="url" type="url" name="url" placeholder="http://www.exampleweb.ex" ng-model="url" required /></td>
+          <td>
+            <input
+              id="url"
+              type="url"
+              name="url"
+              placeholder="http://www.exampleweb.ex"
+              ng-model="url"
+              required />
+          </td>
           <td>{{form.url.$valid}}</td>
         </tr>
         <tr>
           <td><label for="number">Number:</label></td>
-          <td><input id="number" type="number" name="number" placeholder="12345" ng-model="number" required /></td>
+          <td>
+            <input
+              id="number"
+              type="number"
+              name="number"
+              placeholder="12345"
+              ng-model="number"
+              required />
+          </td>
           <td>{{form.number.$valid}}</td>
         </tr>
         <tr>
           <td><label for="password">Password:</label></td>
-          <td><input id="password" type="password" name="password" placeholder="Anything" ng-model="password" required /></td>
+          <td>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              placeholder="Anything"
+              ng-model="password"
+              required />
+          </td>
           <td>{{form.password.$valid}}</td>
         </tr>
         <tr>
           <td><label for="date">Date-time:</label></td>
-          <td><input id="date" type="datetime-local" name="date" placeholder="2019-01-01T09:30" ng-model="date" required /></td>
+          <td>
+            <input
+              id="date"
+              type="datetime-local"
+              name="date"
+              placeholder="2019-01-01T09:30"
+              ng-model="date"
+              required />
+          </td>
           <td>{{form.date.$valid}}</td>
         </tr>
         <tr>
           <td><label for="month">Month:</label></td>
-          <td><input id="month" type="month" name="month" placeholder="2019-01" ng-model="month" required /></td>
+          <td>
+            <input
+              id="month"
+              type="month"
+              name="month"
+              placeholder="2019-01"
+              ng-model="month"
+              required />
+          </td>
           <td>{{form.month.$valid}}</td>
         </tr>
         <tr>
           <td><label for="week">Week:</label></td>
-          <td><input id="week" type="week" name="week" placeholder="2019-W01" ng-model="week" required /></td>
+          <td>
+            <input
+              id="week"
+              type="week"
+              name="week"
+              placeholder="2019-W01"
+              ng-model="week"
+              required />
+          </td>
           <td>{{form.week.$valid}}</td>
         </tr>
         <tr>
           <td><label for="search">Search:</label></td>
-          <td><input id="search" type="search" name="search" placeholder="Anything" ng-model="search" style="width:168px;" required /></td>
+          <td>
+            <input
+              id="search"
+              type="search"
+              name="search"
+              placeholder="Anything"
+              ng-model="search"
+              style="width:168px;"
+              required />
+          </td>
           <td>{{form.search.$valid}}</td>
         </tr>
       </table>
-      <input id="submit-form" type="submit" name="submit" value="Register" />
+      <input id="submit-form" type="submit" name="submit" value="Register" ng-click="validate()" />
     </form>
   </div>
+  <script type="text/javascript" src="temp_index.js"></script>
 </body>
 </html>

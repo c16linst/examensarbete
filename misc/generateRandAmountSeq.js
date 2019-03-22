@@ -1,15 +1,17 @@
 // This will (temporarily?) be used to generate a sequence of random
 // numbers to determine the amount of inputs that are going to be generated
-// and which type they will be
 
 var data = [];
 
 for(let i = 0; i < 10000; i++) {
-  data.push(Math.floor(Math.random() * 10 + 1));
+  data.push(Math.floor(Math.random() * 20 + 1));
 }
 
 var textFile = null;
 data = data.toString();
+data = 'const inputAmount = [' + data + '];';
+data += 'export { inputAmount };'
+
 
 var createFile = function(input) {
   var blob = new Blob([input], { type: 'text/plain' });
@@ -19,7 +21,7 @@ var createFile = function(input) {
 };
 
 var a = document.createElement('a');
-a.setAttribute('download', 'random-numbers-10000-1-10.txt');
+a.setAttribute('download', 'random-numbers-10000-1-20.js');
 a.setAttribute('href', createFile(data));
 document.body.appendChild(a);
 

@@ -79,6 +79,8 @@ class Form extends Component {
     const formsAmount = 4;
     const forms = this.generateTableRows(this.createFormsMatrix(formsAmount));
 
+    localStorage.setItem('formsAmount', formsAmount);
+
     // formIndex will be set in the GreaseMonkey script
     var formIndex = localStorage.getItem('formIndex');
     if(formIndex === null || formIndex === '') formIndex = 0;

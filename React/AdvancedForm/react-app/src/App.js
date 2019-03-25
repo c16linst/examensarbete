@@ -24,7 +24,10 @@ class Form extends Component {
 
     // Manual validation is performed when pressing the submit button
     let form = this.formRef.current;
-    if(form.checkValidity()) form.submit();
+    if(form.checkValidity()) {
+      form.submit();
+      localStorage.setItem('StopTime', Date.now());
+    }
   }
 
   // Returns a matrix with a specified amount of forms that

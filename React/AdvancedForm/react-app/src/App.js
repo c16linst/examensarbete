@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import './App.css';
 import { inputTypes } from './forms.js';
+import { inputAmount } from './random-numbers-10000-1-20.js';
+import { inputType } from './random-numbers-10000-1-10.js';
+import './App.css';
 
 class App extends Component {
   render() {
@@ -24,19 +26,65 @@ class Form extends Component {
     if(form.checkValidity()) form.submit();
   }
 
-  renderTableRows() {
-    const tableRows = Object.keys(inputTypes).map(function(key) {
-      const inputObject = inputTypes[key];
-      return (
-        <TableRow
-        key={inputObject.type}
-        type={inputObject.type}
-        placeholder={inputObject.placeholder}
-        label={inputObject.label} />
-      );
+  // Returns a matrix with a specified amount of forms that
+  // contains different input types
+  createFormsMatrix(amount) {
+    var type = inputType;
+    var formsMatrix = [];
+
+    for(let i = 0; i < amount; i++) {
+      formsMatrix.push(inputAmount[i]);
+
+      var inputs = [];
+      for(let y = 0; y < inputAmount[i]; y++) {
+        inputs[y] = type[y];
+        formsMatrix[i] = inputs;
+
+        type.shift();
+      }
+    }
+
+    return formsMatrix;
+  }
+
+  // Create a new array of forms with TableRows inside
+  // Each TableRow will contain an input based on the formsMatrix
+  generateTableRows(formsMatrix) {
+    var forms = [];
+    var tableRows = [];
+
+    formsMatrix.forEach(function(form) {
+      form.forEach(function(type, index) {
+        var inputObject = inputTypes[type-1];
+
+        tableRows.push(
+          <TableRow
+          key={'input' + index}
+          type={inputObject.type}
+          placeholder={inputObject.placeholder}
+          label={inputObject.label} />
+        );
+      });
+
+      forms.push(tableRows);
+      tableRows = [];
     });
-    
-    return tableRows;
+
+    return forms;
+  }
+
+  renderTableRows() {
+    // formsAmount is the only variable that should be changed!
+    // It sets the amount of different forms that should exist
+    const formsAmount = 4;
+    const forms = this.generateTableRows(this.createFormsMatrix(formsAmount));
+
+    // formIndex will be set in the GreaseMonkey script
+    var formIndex = localStorage.getItem('formIndex');
+    if(formIndex === null || formIndex === '') formIndex = 0;
+
+    // The forms array contains a set of TableRows at index formIndex
+    return forms[formIndex];
   }
 
   render() {

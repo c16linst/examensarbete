@@ -5,16 +5,32 @@
 // @require  https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js
 // ==/UserScript==
 
-var run = 10;
+const inputTypes = [
+    'text',
+    'email',
+    'tel',
+    'url',
+    'number',
+    'password',
+    'datetime-local',
+    'month',
+    'week',
+    'search'
+  ];
+
+var formsAmount = localStorage.getItem('formsAmount');
+
 var scriptsRun = localStorage.getItem('ScriptsRun');
 if(scriptsRun == null) scriptsRun = 1;
 
-$(document).ready(function() {
-  var data = [];
-  if(localStorage.getItem('data') != null) data = JSON.parse(localStorage.getItem('data'));
+var formIndex = localStorage.getItem('formIndex');
+if(formIndex == '' || formIndex == null) formIndex = 0;
 
+var data = [];
+
+$(document).ready(function() {
   if(localStorage.getItem('StartTime') != null) {
-    localStorage.setItem('StopTime', Date.now());
+    if(localStorage.getItem('data') != null) data = JSON.parse(localStorage.getItem('data'));
 
     var startTime = localStorage.getItem('StartTime');
     var stopTime = localStorage.getItem('StopTime');
@@ -23,14 +39,19 @@ $(document).ready(function() {
 
     data.push(time);
     localStorage.setItem('data', JSON.stringify(data));
+  } else {
+    if(localStorage.getItem('data') != null) data = JSON.parse(localStorage.getItem('data'));
   }
 
-  if(scriptsRun <= run) {
-    $('#email-input').focus();
-    $('#email-input').attr('value', 'example@test.com');
-    $('#email-input').blur();
+  if(scriptsRun <= formsAmount) {
+    inputTypes.forEach(function(type) {
+      $('input[type=' + type + ']').each(function() {
+        $(this).attr('value', setValue(type));
+      });
+    });
+
     $('#submit-form').click();
-  } else if(scriptsRun > run) {
+  } else if(scriptsRun > formsAmount) {
     var textFile = null;
 
     data = data.toString();
@@ -55,6 +76,35 @@ $(document).ready(function() {
 
 $('#submit-form').on('click', function() {
   scriptsRun++;
+  formIndex++;
   localStorage.setItem('StartTime', Date.now());
   localStorage.setItem('ScriptsRun', scriptsRun);
+  localStorage.setItem('formIndex', formIndex);
 });
+
+function setValue(type) {
+  switch(type) {
+    case 'text':
+      return 'test text';
+    case 'email':
+      return 'example@test.com';
+    case 'tel':
+      return '0701234567';
+    case 'url':
+      return 'http://www.exampleweb.ex';
+    case 'number':
+      return '12345';
+    case 'password':
+      return 'password123';
+    case 'datetime-local':
+      return '2019-01-01T09:30';
+    case 'month':
+      return '2019-01';
+    case 'week':
+      return '2019-W01';
+    case 'search':
+      return 'search string';
+    default:
+      return 'reached default';
+  }
+}

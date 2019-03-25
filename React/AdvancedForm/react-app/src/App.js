@@ -22,6 +22,7 @@ class Form extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
+    // Manual validation is performed when pressing the submit button
     let form = this.formRef.current;
     if(form.checkValidity()) form.submit();
   }
@@ -59,10 +60,10 @@ class Form extends Component {
 
         tableRows.push(
           <TableRow
-          key={'input' + index}
-          type={inputObject.type}
-          placeholder={inputObject.placeholder}
-          label={inputObject.label} />
+            key={'input' + index}
+            type={inputObject.type}
+            placeholder={inputObject.placeholder}
+            label={inputObject.label} />
         );
       });
 

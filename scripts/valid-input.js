@@ -18,10 +18,11 @@ const inputTypes = [
     'search'
   ];
 
-var formsAmount = localStorage.getItem('formsAmount');
+var formsAmount = parseInt(localStorage.getItem('formsAmount'));
 
 var scriptsRun = localStorage.getItem('ScriptsRun');
 if(scriptsRun == null) scriptsRun = 1;
+parseInt(scriptsRun);
 
 var formIndex = localStorage.getItem('formIndex');
 if(formIndex == '' || formIndex == null) formIndex = 0;

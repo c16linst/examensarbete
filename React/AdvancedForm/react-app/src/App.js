@@ -56,8 +56,12 @@ class Form extends Component {
   generateTableRows(formsMatrix) {
     var forms = [];
     var tableRows = [];
+    var formSize = [];
 
     formsMatrix.forEach(function(form) {
+      formSize.push(form.length);
+      localStorage.setItem('formSize', JSON.stringify(formSize));
+
       form.forEach(function(type, index) {
         var inputObject = inputTypes[type-1];
 

@@ -27,21 +27,24 @@ parseInt(scriptsRun);
 var formIndex = localStorage.getItem('formIndex');
 if(formIndex == '' || formIndex == null) formIndex = 0;
 
-var data = [];
+var times = [];
+var formSize = [];
 
 $(document).ready(function() {
   if(localStorage.getItem('StartTime') != null) {
-    if(localStorage.getItem('data') != null) data = JSON.parse(localStorage.getItem('data'));
+    if(localStorage.getItem('times') != null) times = JSON.parse(localStorage.getItem('times'));
+    if(localStorage.getItem('formSize') != null) formSize = JSON.parse(localStorage.getItem('formSize'));
 
     var startTime = localStorage.getItem('StartTime');
     var stopTime = localStorage.getItem('StopTime');
     var time = stopTime - startTime;
     localStorage.setItem('Time', time);
 
-    data.push(time);
-    localStorage.setItem('data', JSON.stringify(data));
+    times.push(time);
+    localStorage.setItem('times', JSON.stringify(times));
   } else {
-    if(localStorage.getItem('data') != null) data = JSON.parse(localStorage.getItem('data'));
+    if(localStorage.getItem('times') != null) times = JSON.parse(localStorage.getItem('times'));
+    if(localStorage.getItem('formSize') != null) formSize = JSON.parse(localStorage.getItem('formSize'));
   }
 
   if(scriptsRun <= formsAmount) {
@@ -54,15 +57,20 @@ $(document).ready(function() {
     $('#submit-form').click();
   } else if(scriptsRun > formsAmount) {
     var textFile = null;
+    var data = [];
+
+    for(let i = 0; i < formsAmount; i++) {
+    	data.push(formSize[i]);
+      data.push(times[i]);
+    }
 
     data = data.toString();
-    data = data.replace(/([\[\]])/g, '');
-    data = data.replace(/(\,)/g, '\n');
+   	data = data.replace(/([\[\]])/g, '');
+   	data = data.replace(/([\d]{1,3}[\,])([\d]{1,3})([\,])/g, "$1$2\n");
 
     var createFile = function(input) {
-      var blob = new Blob([input], { type: 'text/plain' });
+      var blob = new Blob([input], { type: 'text/csv' });
       textFile = window.URL.createObjectURL(blob);
-
       return textFile;
     };
 

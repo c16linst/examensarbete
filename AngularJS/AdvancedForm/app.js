@@ -1,5 +1,9 @@
 var app = angular.module('app', []);
 
+app.controller('controller', function() {
+
+});
+
 app.component('customForm', {
   controller: function() {
     this.inputs = [

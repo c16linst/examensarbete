@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { inputTypes } from './forms.js';
+import { inputTypes } from './inputTypes.js';
 import { inputAmount } from './random-numbers-10000-1-20.js';
 import { inputType } from './random-numbers-10000-1-10.js';
 import './App.css';

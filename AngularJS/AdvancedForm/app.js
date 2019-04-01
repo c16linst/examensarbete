@@ -5,59 +5,66 @@ app.controller('controller', function() {
 });
 
 app.component('customForm', {
-  controller: function() {
-    this.inputs = [
-      {
-        type: 'text',
-        name: 'text',
-        placeholder: 'Anything'
-      },
-      {
-        type: 'email',
-        name: 'email',
-        placeholder: 'example@test.com'
-      },
-      {
-        type: 'tel',
-        name: 'tel',
-        placeholder: '0701234567'
-      },
-      {
-        type: 'url',
-        name: 'url',
-        placeholder: 'http://www.exampleweb.ex'
-      },
-      {
-        type: 'number',
-        name: 'number',
-        placeholder: '12345'
-      },
-      {
-        type: 'password',
-        name: 'password',
-        placeholder: 'Anything'
-      },
-      {
-        type: 'datetime-local',
-        name: 'date',
-        placeholder: '2019-01-01T09:30'
-      },
-      {
-        type: 'month',
-        name: 'month',
-        placeholder: '2019-01'
-      },
-      {
-        type: 'week',
-        name: 'week',
-        placeholder: '2019-W01'
-      },
-      {
-        type: 'search',
-        name: 'search',
-        placeholder: 'Anything'
+  controller: function($scope, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES) {
+    // Returns a matrix with a specified amount of forms that
+    // contains different input types
+    $scope.createFormsMatrix = function(amount) {
+      var formsMatrix = [];
+
+      for(let i = 0; i < amount; i++) {
+        formsMatrix.push(INPUT_AMOUNT[i]);
+
+        var inputs = [];
+        for(let y = 0; y < INPUT_AMOUNT[i]; y++) {
+          inputs[y] = INPUT_TYPE[y];
+          formsMatrix[i] = inputs;
+
+          INPUT_TYPE.shift();
+        }
       }
-    ];
+
+      return formsMatrix;
+    };
+
+    // Create a new array of forms with inputs inside, based on the formsMatrix
+    $scope.generateInputs = function(formsMatrix) {
+      var forms = [];
+      var formSize = [];
+      var inputs = [];
+
+      formsMatrix.forEach(function(form) {
+        formSize.push(form.length);
+        localStorage.setItem('formSize', JSON.stringify(formSize));
+
+        form.forEach(function(type, index) {
+          var inputObject = INPUT_TYPES[type-1];
+          inputs.push(inputObject);
+        });
+
+        forms.push(inputs);
+        inputs = [];
+      });
+
+      return forms;
+    };
+
+    $scope.renderForm = function() {
+      // formsAmount is the only variable that should be changed!
+      // It sets the amount of different forms that should exist
+      const formsAmount = 5;
+      localStorage.setItem('formsAmount', formsAmount);
+
+      const formsMatrix = $scope.createFormsMatrix(formsAmount);
+      const forms = $scope.generateInputs(formsMatrix);
+
+      // formIndex will be set in the GreaseMonkey script
+      var formIndex = localStorage.getItem('formIndex');
+      if(formIndex == null || formIndex == '') formIndex = 0;
+
+      return forms[formIndex];
+    }
+
+    $scope.dynamicForm = $scope.renderForm();
   },
   bindings: {
     ngModel: '='

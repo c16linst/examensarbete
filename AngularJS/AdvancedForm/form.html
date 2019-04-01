@@ -1,6 +1,6 @@
 <form name="form" ng-model="form" novalidate="true">
   <table>
-    <tr ng-repeat="input in $ctrl.inputs">
+    <tr ng-repeat="input in dynamicForm track by $index">
       <td>
         <date-number-input
           ng-if="input.name == 'date' || input.name == 'month' || input.name == 'week' || input.name == 'number'"
@@ -26,5 +26,5 @@
       </td>
     </tr>
   </table>
-  <input type="submit" name="submit" style="width:172px;" value="Submit" />
+  <input id="submit-form" type="submit" name="submit" style="width:172px;" value="Submit" />
 </form>

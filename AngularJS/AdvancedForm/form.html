@@ -1,3 +1,30 @@
-<form name="form">
-  <custom-table></custom-table>
+<form name="form" ng-model="form" novalidate="true">
+  <table>
+    <tr ng-repeat="input in $ctrl.inputs">
+      <td>
+        <date-number-input
+          ng-if="input.name == 'date' || input.name == 'month' || input.name == 'week' || input.name == 'number'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </date-number-input>
+        <search-input
+          ng-if="input.name == 'search'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </search-input>
+        <custom-input
+          ng-if="input.name != 'search' &amp;&amp; input.name != 'date' &amp;&amp; input.name != 'month' &amp;&amp; input.name != 'week' &amp;&amp; input.name != 'number'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </custom-input>
+      </td>
+    </tr>
+  </table>
+  <input type="submit" name="submit" style="width:172px;" value="Submit" />
 </form>

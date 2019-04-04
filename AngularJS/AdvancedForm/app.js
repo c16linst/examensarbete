@@ -5,7 +5,32 @@ app.controller('controller', function() {
 });
 
 app.component('customForm', {
-  controller: function($scope, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES) {
+  controller: function($scope, $http, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES) {
+    // window.onbeforeunload = function() {
+    //   console.log(Date.now());
+    // }
+
+    // Manually post the form if it is valid
+    $scope.submit = function() {
+      var form = $scope.form;
+      console.log(form);
+
+      if(form.$invalid) {
+        console.log('Failed to submit form');
+        return;
+      } else if(form.$valid) {
+        $http({
+          method: 'post',
+          url: 'index.html'
+        })
+        .then(function successCallback(res) {
+          location.reload();
+        }, function errorCallback(res) {
+          console.log('Failed to submit form');
+        });
+      }
+    }
+
     // Returns a matrix with a specified amount of forms that
     // contains different input types
     $scope.createFormsMatrix = function(amount) {

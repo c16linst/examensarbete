@@ -66,40 +66,121 @@ app.component('customForm', {
 
     $scope.dynamicForm = $scope.renderForm();
   },
+  require: 'ngModel',
   bindings: {
     ngModel: '='
   },
   templateUrl: 'form.html'
 });
 
-app.component('dateNumberInput', {
+app.component('textInput', {
+  require: 'ngModel',
   bindings: {
     type: '<',
     name: '<',
     placeholder: '<',
     ngModel: '<'
   },
-  templateUrl: 'dateNumberInput.html'
+  templateUrl: 'input/textInput.html'
+});
+
+app.component('emailInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/emailInput.html'
+});
+
+app.component('telInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/telInput.html'
+});
+
+app.component('urlInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/urlInput.html'
+});
+
+app.component('numberInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/numberInput.html'
+});
+
+app.component('passwordInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/passwordInput.html'
+});
+
+app.component('dateInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/dateInput.html'
+});
+
+app.component('monthInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/monthInput.html'
+});
+
+app.component('weekInput', {
+  require: 'ngModel',
+  bindings: {
+    type: '<',
+    name: '<',
+    placeholder: '<',
+    ngModel: '<'
+  },
+  templateUrl: 'input/weekInput.html'
 });
 
 app.component('searchInput', {
+  require: 'ngModel',
   bindings: {
     type: '<',
     name: '<',
     placeholder: '<',
     ngModel: '<'
   },
-  templateUrl: 'searchInput.html'
-});
-
-app.component('customInput', {
-  bindings: {
-    type: '<',
-    name: '<',
-    placeholder: '<',
-    ngModel: '<'
-  },
-  templateUrl: 'input.html'
+  templateUrl: 'input/searchInput.html'
 });
 
 app.directive('dateNumberFormat', function() {

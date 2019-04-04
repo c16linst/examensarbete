@@ -1,14 +1,78 @@
-<form name="form" ng-model="form" novalidate="true">
+<form
+  name="form"
+  ng-model="form"
+  novalidate="true"
+  ng-model-options="{ updateOn: 'submit' }"
+  ng-submit="submit()">
   <table>
     <tr ng-repeat="input in dynamicForm track by $index">
       <td>
-        <date-number-input
-          ng-if="input.name == 'date' || input.name == 'month' || input.name == 'week' || input.name == 'number'"
+        <label for="input.name">{{input.name}}</label>
+      </td>
+      <td>
+        <text-input
+          ng-if="input.name == 'text'"
           type="input.type"
           name="input.name"
           placeholder="input.placeholder"
           ng-model="input.name">
-        </date-number-input>
+        </text-input>
+        <email-input
+          ng-if="input.name == 'email'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </email-input>
+        <tel-input
+          ng-if="input.name == 'tel'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </tel-input>
+        <url-input
+          ng-if="input.name == 'url'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </url-input>
+        <number-input
+          ng-if="input.name == 'number'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </number-input>
+        <password-input
+          ng-if="input.name == 'password'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </password-input>
+        <date-input
+          ng-if="input.name == 'date'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </date-input>
+        <month-input
+          ng-if="input.name == 'month'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </month-input>
+        <week-input
+          ng-if="input.name == 'week'"
+          type="input.type"
+          name="input.name"
+          placeholder="input.placeholder"
+          ng-model="input.name">
+        </week-input>
         <search-input
           ng-if="input.name == 'search'"
           type="input.type"
@@ -16,13 +80,6 @@
           placeholder="input.placeholder"
           ng-model="input.name">
         </search-input>
-        <custom-input
-          ng-if="input.name != 'search' &amp;&amp; input.name != 'date' &amp;&amp; input.name != 'month' &amp;&amp; input.name != 'week' &amp;&amp; input.name != 'number'"
-          type="input.type"
-          name="input.name"
-          placeholder="input.placeholder"
-          ng-model="input.name">
-        </custom-input>
       </td>
     </tr>
   </table>

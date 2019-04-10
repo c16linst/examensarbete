@@ -4,6 +4,18 @@ app.controller('controller', function() {
 
 });
 
+function getScriptsRun() {
+  var scriptsRun = JSON.parse(localStorage.getItem('ScriptsRun'));
+  scriptsRun = (scriptsRun == null) ? 1 : scriptsRun;
+  return scriptsRun;
+}
+
+function getFormIndex() {
+  var formIndex = JSON.parse(localStorage.getItem('FormIndex'));
+  formIndex = (formIndex == null) ? 0 : formIndex;
+  return formIndex;
+}
+
 app.component('customForm', {
   controller: function($scope, $http, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES) {
     $scope.scriptsRun = getScriptsRun();
@@ -57,7 +69,8 @@ app.component('customForm', {
           url: 'index.html'
         })
         .then(function successCallback(res) {
-          location.reload();
+          localStorage.setItem('StopTime', Date.now());
+          location.reload(true);
         }, function errorCallback(res) {
           console.log('Failed to submit form');
         });
@@ -92,7 +105,7 @@ app.component('customForm', {
 
       formsMatrix.forEach(function(form) {
         formSize.push(form.length);
-        localStorage.setItem('formSize', JSON.stringify(formSize));
+        localStorage.setItem('FormSize', JSON.stringify(formSize));
 
         form.forEach(function(type, index) {
           var inputObject = INPUT_TYPES[type-1];
@@ -109,14 +122,14 @@ app.component('customForm', {
     $scope.renderForm = function() {
       // formsAmount is the only variable that should be changed!
       // It sets the amount of different forms that should exist
-      const formsAmount = 5;
-      localStorage.setItem('formsAmount', formsAmount);
+      const formsAmount = 3;
+      localStorage.setItem('FormsAmount', formsAmount);
 
       const formsMatrix = $scope.createFormsMatrix(formsAmount);
       const forms = $scope.generateInputs(formsMatrix);
 
       // formIndex will be set in the GreaseMonkey script
-      var formIndex = localStorage.getItem('formIndex');
+      var formIndex = localStorage.getItem('FormIndex');
       if(formIndex == null || formIndex == '') formIndex = 0;
 
       return forms[formIndex];

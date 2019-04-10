@@ -6,15 +6,48 @@ app.controller('controller', function() {
 
 app.component('customForm', {
   controller: function($scope, $http, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES) {
-    // window.onbeforeunload = function() {
-    //   console.log(Date.now());
-    // }
+    $scope.scriptsRun = getScriptsRun();
+    $scope.formIndex = getFormIndex();
 
-    // Manually post the form if it is valid
     $scope.submit = function() {
-      var form = $scope.form;
-      console.log(form);
+      // Update localstorage for the GreaseMonkey script
+      $scope.scriptsRun++;
+      $scope.formIndex++;
+      localStorage.setItem('ScriptsRun', $scope.scriptsRun);
+      localStorage.setItem('FormIndex', $scope.formIndex);
+      localStorage.setItem('StartTime', Date.now());
 
+      // Check if the form is valid
+      var form = $scope.form;
+      var validities = [];
+      var validity = true;
+
+      // Loop through the forms scope...
+      angular.forEach(form, function(element, name) {
+        // ...and compare scope indexes to input names to find input scopes
+        INPUT_TYPES.forEach(function(input) {
+          // We should not do this for the other stuff in the scope
+          if(name.indexOf(input.name) == 0) {
+            validities.push(form[name].$valid);
+          }
+        });
+      });
+
+      validities.forEach(function(valid) {
+        if(!valid) validity = false;
+      });
+
+      if(validity) {
+        form.$valid = true;
+        form.$invalid = false;
+      } else {
+        form.$valid = false;
+        form.$invalid = true;
+      }
+
+      localStorage.setItem('ValidationStartTime', Date.now());
+
+      // Manually post the form if it's valid
       if(form.$invalid) {
         console.log('Failed to submit form');
         return;
@@ -104,7 +137,7 @@ app.component('textInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/textInput.html'
 });
@@ -115,7 +148,7 @@ app.component('emailInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/emailInput.html'
 });
@@ -126,7 +159,7 @@ app.component('telInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/telInput.html'
 });
@@ -137,7 +170,7 @@ app.component('urlInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/urlInput.html'
 });
@@ -148,7 +181,7 @@ app.component('numberInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/numberInput.html'
 });
@@ -159,7 +192,7 @@ app.component('passwordInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/passwordInput.html'
 });
@@ -170,7 +203,7 @@ app.component('dateInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/dateInput.html'
 });
@@ -181,7 +214,7 @@ app.component('monthInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/monthInput.html'
 });
@@ -192,7 +225,7 @@ app.component('weekInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/weekInput.html'
 });
@@ -203,7 +236,7 @@ app.component('searchInput', {
     type: '<',
     name: '<',
     placeholder: '<',
-    ngModel: '<'
+    ngModel: '='
   },
   templateUrl: 'input/searchInput.html'
 });

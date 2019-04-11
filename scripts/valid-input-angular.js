@@ -26,6 +26,9 @@ $(document).ready(function() {
   var formsAmount = localStorage.getItem('FormsAmount');
   var scriptsRun = JSON.parse(localStorage.getItem('ScriptsRun'));
   var formIndex = JSON.parse(localStorage.getItem('FormIndex'));
+  var manualStart = localStorage.getItem('StartSettingViewValue');
+  var manualStop = localStorage.getItem('StopSettingViewValue');
+  var manualTime = manualStop - manualStart;
 
   if(scriptsRun == null) scriptsRun = 1;
   if(formIndex == null) formIndex = 0;
@@ -35,7 +38,7 @@ $(document).ready(function() {
     if(localStorage.getItem('FormSize') != null) formSize = JSON.parse(localStorage.getItem('FormSize'));
 
     var stopTime = localStorage.getItem('StopTime');
-    var time = stopTime - startTime;
+    var time = (stopTime - startTime) - manualTime;
     localStorage.setItem('Time', time);
 
     times.push(time);

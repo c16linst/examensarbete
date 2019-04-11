@@ -1,0 +1,118 @@
+<form
+  name="form"
+  ng-model="form"
+  novalidate="true"
+  ng-model-options="{ updateOn: 'submit' }"
+  ng-submit="submit()">
+  <table>
+    <tr ng-repeat="input in dynamicForm track by $index">
+      <td>
+        <label for="input.name">{{input.label}}:</label>
+      </td>
+      <td>
+        <input
+          ng-if="input.name == 'text'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="text"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'email'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="email"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'tel'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="tel"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'url'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="url"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'number'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="number"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'password'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="password"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'date'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="date"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'month'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="month"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'week'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          ng-model="week"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+        <input
+          ng-if="input.name == 'search'"
+          type="{{input.type}}"
+          name="{{input.name + $index}}"
+          class="{{input.name}}"
+          placeholder="{{input.placeholder}}"
+          style="width:168px"
+          ng-model="search"
+          ng-required="true"
+          ng-value=""
+          onChange="change(this, angular.element(this).scope())" />
+      </td>
+    </tr>
+  </table>
+  <input id="submit-form" type="submit" name="submit" style="width:172px;" value="Submit" />
+</form>

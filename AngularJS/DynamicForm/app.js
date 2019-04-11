@@ -15,11 +15,11 @@ app.component('customForm', {
       $scope.formIndex++;
       localStorage.setItem('ScriptsRun', $scope.scriptsRun);
       localStorage.setItem('FormIndex', $scope.formIndex);
-      localStorage.setItem('StartTime', Date.now());
+      localStorage.setItem('StartTime', performance.now());
 
       // Manually post the form if it's valid
       if($scope.form.$invalid) {
-        localStorage.setItem('StopTime', Date.now());
+        localStorage.setItem('StopTime', performance.now());
         console.log('Failed to submit form - form is invalid');
         location.reload(true);
         return;
@@ -29,7 +29,7 @@ app.component('customForm', {
           url: 'index.html'
         })
         .then(function successCallback(res) {
-          localStorage.setItem('StopTime', Date.now());
+          localStorage.setItem('StopTime', performance.now());
           location.reload(true);
         }, function errorCallback(res) {
           console.log('Failed to submit form');
@@ -148,7 +148,7 @@ app.component('customForm', {
 
 // Helper function to update the scope's viewValue
 function change(input, scope) {
-  localStorage.setItem('StartSettingViewValue', Date.now());
+  localStorage.setItem('StartSettingViewValue', performance.now());
 
   // Loop through all items in the form's scope to find the current input
   var form = scope.$parent.$parent.form;
@@ -160,7 +160,7 @@ function change(input, scope) {
     }
   })
 
-  localStorage.setItem('StopSettingViewValue', Date.now());
+  localStorage.setItem('StopSettingViewValue', performance.now());
 }
 
 // Helper functions to get values from localstorage

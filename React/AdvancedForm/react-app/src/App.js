@@ -21,13 +21,13 @@ class Form extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem('StartTime', Date.now());
+    localStorage.setItem('StartTime', performance.now());
 
     // Manual validation is performed when pressing the submit button
     let form = this.formRef.current;
     if(form.checkValidity()) {
       form.submit();
-      localStorage.setItem('StopTime', Date.now());
+      localStorage.setItem('StopTime', performance.now());
     }
   }
 

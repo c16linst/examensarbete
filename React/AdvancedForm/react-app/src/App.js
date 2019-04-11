@@ -21,6 +21,7 @@ class Form extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
+    localStorage.setItem('StartTime', Date.now());
 
     // Manual validation is performed when pressing the submit button
     let form = this.formRef.current;
@@ -31,7 +32,7 @@ class Form extends Component {
   }
 
   // Returns a matrix with a specified amount of forms that
-  // contains different input types
+  // contains a "random" amount of inputs with "randomly" picked types
   createFormsMatrix(amount) {
     var type = inputType;
     var formsMatrix = [];
@@ -51,28 +52,66 @@ class Form extends Component {
     return formsMatrix;
   }
 
+  // Returns a matrix containing one input per form
+  // The inputs will range over all types (1-10)
+  createSimpleFormsMatrix(amount) {
+    var index = 1;
+    var formsMatrix = [];
+
+    for(let i = 0; i < amount; i++) {
+      formsMatrix.push(1);
+      formsMatrix[i] = index;
+
+      if(index < 10) index++;
+      else index = 1;
+    }
+
+    return formsMatrix;
+  }
+
   // Create a new array of forms with TableRows inside
   // Each TableRow will contain an input based on the formsMatrix
   generateTableRows(formsMatrix) {
     var forms = [];
     var tableRows = [];
     var formSize = [];
+    var types = [];
 
-    formsMatrix.forEach(function(form) {
-      formSize.push(form.length);
-      localStorage.setItem('formSize', JSON.stringify(formSize));
+    formsMatrix.forEach(function(form, i) {
+      if(form.length > 0) {
+        formSize.push(form.length);
 
-      form.forEach(function(type, index) {
-        var inputObject = inputTypes[type-1];
+        // FormSize will be used to evaluate if the form's
+        // size makes a difference in the validation time
+        localStorage.setItem('FormSize', JSON.stringify(formSize));
+
+        form.forEach(function(type, index) {
+          var inputObject = inputTypes[type-1];
+
+          tableRows.push(
+            <TableRow
+              key={'input' + index}
+              type={inputObject.type}
+              placeholder={inputObject.placeholder}
+              label={inputObject.label} />
+          );
+        });
+      } else {
+        var inputObject = inputTypes[form-1];
 
         tableRows.push(
           <TableRow
-            key={'input' + index}
+            key={'input' + i}
             type={inputObject.type}
             placeholder={inputObject.placeholder}
             label={inputObject.label} />
         );
-      });
+
+        // InputType will be used to evaluate if the input's
+        // type makes a difference in the validation time
+        types.push(inputObject.type);
+        localStorage.setItem('InputType', types);
+      }
 
       forms.push(tableRows);
       tableRows = [];
@@ -82,16 +121,28 @@ class Form extends Component {
   }
 
   renderTableRows() {
-    // formsAmount is the only variable that should be changed!
-    // It sets the amount of different forms that should exist
-    const formsAmount = 4;
-    const forms = this.generateTableRows(this.createFormsMatrix(formsAmount));
+    // !!!! formsAmount & simpleForm are the only
+    //      variables that should be changed
+    // -formsAmount: Sets the amount of different forms that should exist
+    // -simpleForm: If true, the form will only contain one input at a time
+    // and will loop through all input types
+    const formsAmount = 100;
+    const simpleForm = true;
 
     localStorage.setItem('formsAmount', formsAmount);
+
+    var formsMatrix;
+    if(simpleForm) formsMatrix = this.createSimpleFormsMatrix(formsAmount)
+    else formsMatrix = this.createFormsMatrix(formsAmount);
+
+    const forms = this.generateTableRows(formsMatrix);
 
     // formIndex will be set in the GreaseMonkey script
     var formIndex = localStorage.getItem('formIndex');
     if(formIndex === null || formIndex === '') formIndex = 0;
+
+    // Tell the GreasyMonkey script that this is a simple form
+    if(simpleForm) localStorage.setItem('SimpleForm', true);
 
     // The forms array contains a set of TableRows at index formIndex
     return forms[formIndex];
@@ -179,7 +230,7 @@ class Input extends Component {
         <input
           type="submit"
           id="submit-form"
-          value="Register"
+          value="Submit"
           onClick={(e) => this.props.handleSubmit(e)}
         />
       );

@@ -137,7 +137,7 @@ class Form extends Component {
 
     const forms = this.generateTableRows(formsMatrix);
 
-    // formIndex will be set in the GreaseMonkey script
+    // formIndex will be set in the TamperMonkey script
     var formIndex = localStorage.getItem('formIndex');
     if(formIndex === null || formIndex === '') formIndex = 0;
 

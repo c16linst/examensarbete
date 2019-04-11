@@ -10,7 +10,7 @@ app.component('customForm', {
     $scope.formIndex = getFormIndex();
 
     $scope.submit = function() {
-      // Update localstorage for the GreaseMonkey script
+      // Update localstorage for the TamperMonkey script
       $scope.scriptsRun++;
       $scope.formIndex++;
       localStorage.setItem('ScriptsRun', $scope.scriptsRun);
@@ -127,7 +127,7 @@ app.component('customForm', {
 
       const forms = $scope.generateInputs(formsMatrix);
 
-      // formIndex will be set in the GreaseMonkey script
+      // formIndex will be set in the TamperMonkey script
       var formIndex = localStorage.getItem('FormIndex');
       if(formIndex == null || formIndex == '') formIndex = 0;
 

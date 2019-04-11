@@ -4,19 +4,6 @@ app.controller('controller', function($scope) {
 
 })
 
-// Helper function to update the scope's viewValue
-function change(input, scope) {
-  var form = scope.$parent.$parent.form;
-
-  // Loop through all items in the form's scope to find the current input
-  angular.forEach(form, function(element, name) {
-    if(name == input.name) {
-      element.$setViewValue(input.value);
-      element.$validate();
-    }
-  })
-}
-
 app.component('customForm', {
   controller: function($scope, $http, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES) {
     $scope.scriptsRun = getScriptsRun();
@@ -116,6 +103,24 @@ app.component('customForm', {
   templateUrl: 'form.html'
 })
 
+// Helper function to update the scope's viewValue
+function change(input, scope) {
+  localStorage.setItem('StartSettingViewValue', Date.now());
+
+  // Loop through all items in the form's scope to find the current input
+  var form = scope.$parent.$parent.form;
+  angular.forEach(form, function(element, name) {
+    if(name == input.name) {
+      element.$setViewValue(input.value);
+      element.$validate();
+      return; // Stop the loop if the correct input is found
+    }
+  })
+
+  localStorage.setItem('StopSettingViewValue', Date.now());
+}
+
+// Helper functions to get values from localstorage
 function getScriptsRun() {
   var scriptsRun = JSON.parse(localStorage.getItem('ScriptsRun'));
   scriptsRun = (scriptsRun == null) ? 1 : scriptsRun;

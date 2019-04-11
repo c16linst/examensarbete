@@ -19,8 +19,9 @@ app.component('customForm', {
 
       // Manually post the form if it's valid
       if($scope.form.$invalid) {
-        console.log('Failed to submit form');
-        //location.reload(true);
+        localStorage.setItem('StopTime', Date.now());
+        console.log('Failed to submit form - form is invalid');
+        location.reload(true);
         return;
       } else if($scope.form.$valid) {
         $http({

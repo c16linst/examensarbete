@@ -38,14 +38,14 @@ app.component('customForm', {
     };
 
     // Returns a matrix with a specified amount of forms that
-    // contains different input types
+    // contains a "random" amount of inputs with "randomly" picked types
     $scope.createFormsMatrix = function(amount) {
       var formsMatrix = [];
 
       for(let i = 0; i < amount; i++) {
+        var inputs = [];
         formsMatrix.push(INPUT_AMOUNT[i]);
 
-        var inputs = [];
         for(let y = 0; y < INPUT_AMOUNT[i]; y++) {
           inputs[y] = INPUT_TYPE[y];
           formsMatrix[i] = inputs;
@@ -57,20 +57,51 @@ app.component('customForm', {
       return formsMatrix;
     };
 
+    // Returns a matrix containing one input per form
+    // The inputs will range over all types (1-10)
+    $scope.createSimpleFormsMatrix = function(amount) {
+      var formsMatrix = [];
+      var index = 1;
+
+      for(let i = 0; i < amount; i++) {
+        formsMatrix.push(1);
+        formsMatrix[i] = index;
+
+        if(index < 10) index++;
+        else index = 1;
+      }
+
+      return formsMatrix;
+    };
+
     // Create a new array of forms with inputs inside, based on the formsMatrix
     $scope.generateInputs = function(formsMatrix) {
       var forms = [];
       var formSize = [];
+      var types = [];
       var inputs = [];
 
       formsMatrix.forEach(function(form) {
-        formSize.push(form.length);
-        localStorage.setItem('FormSize', JSON.stringify(formSize));
+        if(form.length > 0) {
+          formSize.push(form.length);
 
-        form.forEach(function(type, index) {
-          var inputObject = INPUT_TYPES[type-1];
+          // FormSize will be used to evaluate if the form's
+          // size makes a difference in the validation time
+          localStorage.setItem('FormSize', JSON.stringify(formSize));
+
+          form.forEach(function(type, index) {
+            var inputObject = INPUT_TYPES[type-1];
+            inputs.push(inputObject);
+          });
+        } else {
+          var inputObject = INPUT_TYPES[form-1];
           inputs.push(inputObject);
-        });
+
+          // InputType will be used to evaluate if the input's
+          // type makes a difference in the validation time
+          types.push(inputObject.type);
+          localStorage.setItem('InputType', JSON.stringify(types));
+        }
 
         forms.push(inputs);
         inputs = [];
@@ -80,17 +111,28 @@ app.component('customForm', {
     };
 
     $scope.renderForm = function() {
-      // formsAmount is the only variable that should be changed!
-      // It sets the amount of different forms that should exist
+      // !!!! formsAmount & simpleForm are the only
+      //      variables that should be changed
+      // -formsAmount: Sets the amount of different forms that should exist
+      // -simpleForm: If true, the form will only contain one input at a time
+      // and will loop through all input types
       const formsAmount = 100;
+      const simpleForm = true;
+
       localStorage.setItem('FormsAmount', formsAmount);
 
-      const formsMatrix = $scope.createFormsMatrix(formsAmount);
+      var formsMatrix;
+      if(simpleForm) formsMatrix = $scope.createSimpleFormsMatrix(formsAmount);
+      else formsMatrix = $scope.createFormsMatrix(formsAmount);
+
       const forms = $scope.generateInputs(formsMatrix);
 
       // formIndex will be set in the GreaseMonkey script
       var formIndex = localStorage.getItem('FormIndex');
       if(formIndex == null || formIndex == '') formIndex = 0;
+
+      // Tell the GreasyMonkey script that this is a simple form
+      if(simpleForm) localStorage.setItem('SimpleForm', true);
 
       return forms[formIndex];
     };

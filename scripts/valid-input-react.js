@@ -73,7 +73,8 @@
 
             data = data.toString();
             data = data.replace(/([\[\]])/g, '');
-            data = data.replace(/([\d]{1,3}[\,])([\d]{1,3})([\,])/g, "$1$2\n");
+            if(simpleForm) data = data.replace(/([A-Za-z]*[\,])([\d\.]*)([\,])/g, "$1$2\n");
+            else data = data.replace(/([\d\.]*)([\,])([\d\.]*)([\,])/g, "$1$2$3\n");
 
             var createFile = function(input) {
                 var blob = new Blob([input], { type: 'text/csv' });

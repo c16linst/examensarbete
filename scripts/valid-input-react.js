@@ -21,22 +21,24 @@
         'search'
     ];
 
-    var formsAmount = parseInt(localStorage.getItem('formsAmount'));
+    var formsAmount = parseInt(localStorage.getItem('FormsAmount'));
+    var simpleForm = JSON.parse(localStorage.getItem('SimpleForm'));
 
     var scriptsRun = localStorage.getItem('ScriptsRun');
     if(scriptsRun == null) scriptsRun = 1;
     parseInt(scriptsRun);
 
-    var formIndex = localStorage.getItem('formIndex');
+    var formIndex = localStorage.getItem('FormIndex');
     if(formIndex == '' || formIndex == null) formIndex = 0;
 
     var times = [];
     var formSize = [];
+    var inputType = [];
 
     $(document).ready(function() {
         if(localStorage.getItem('StartTime') != null) {
             if(localStorage.getItem('times') != null) times = JSON.parse(localStorage.getItem('times'));
-            if(localStorage.getItem('formSize') != null) formSize = JSON.parse(localStorage.getItem('formSize'));
+            if(localStorage.getItem('FormSize') != null) formSize = JSON.parse(localStorage.getItem('FormSize'));
 
             var startTime = localStorage.getItem('StartTime');
             var stopTime = localStorage.getItem('StopTime');
@@ -47,7 +49,8 @@
             localStorage.setItem('times', JSON.stringify(times));
         } else {
             if(localStorage.getItem('times') != null) times = JSON.parse(localStorage.getItem('times'));
-            if(localStorage.getItem('formSize') != null) formSize = JSON.parse(localStorage.getItem('formSize'));
+            if(localStorage.getItem('FormSize') != null) formSize = JSON.parse(localStorage.getItem('FormSize'));
+            if(localStorage.getItem('InputType') != null) inputType = JSON.parse(localStorage.getItem('InputType'));
         }
 
         if(scriptsRun <= formsAmount) {
@@ -63,7 +66,8 @@
             var data = [];
 
             for(let i = 0; i < formsAmount; i++) {
-                data.push(formSize[i]);
+                if(simpleForm) data.push(inputType[i]);
+                else data.push(formSize[i]);
                 data.push(times[i]);
             }
 
@@ -90,7 +94,7 @@
         scriptsRun++;
         formIndex++;
         localStorage.setItem('ScriptsRun', scriptsRun);
-        localStorage.setItem('formIndex', formIndex);
+        localStorage.setItem('FormIndex', formIndex);
     });
 
     function setValue(type) {

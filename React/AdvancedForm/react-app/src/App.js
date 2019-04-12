@@ -110,7 +110,7 @@ class Form extends Component {
         // InputType will be used to evaluate if the input's
         // type makes a difference in the validation time
         types.push(inputObject.type);
-        localStorage.setItem('InputType', types);
+        localStorage.setItem('InputType', JSON.stringify(types));
       }
 
       forms.push(tableRows);
@@ -129,7 +129,7 @@ class Form extends Component {
     const formsAmount = 100;
     const simpleForm = true;
 
-    localStorage.setItem('formsAmount', formsAmount);
+    localStorage.setItem('FormsAmount', formsAmount);
 
     var formsMatrix;
     if(simpleForm) formsMatrix = this.createSimpleFormsMatrix(formsAmount)
@@ -138,11 +138,12 @@ class Form extends Component {
     const forms = this.generateTableRows(formsMatrix);
 
     // formIndex will be set in the TamperMonkey script
-    var formIndex = localStorage.getItem('formIndex');
+    var formIndex = localStorage.getItem('FormIndex');
     if(formIndex === null || formIndex === '') formIndex = 0;
 
     // Tell the GreasyMonkey script that this is a simple form
     if(simpleForm) localStorage.setItem('SimpleForm', true);
+    else localStorage.setItem('SimpleForm', false);
 
     // The forms array contains a set of TableRows at index formIndex
     return forms[formIndex];
@@ -238,7 +239,6 @@ class Input extends Component {
       return (
         <input
           type={this.props.type}
-          id={this.props.id}
           name={this.props.type}
           placeholder={this.props.placeholder}
           value={this.state.name}

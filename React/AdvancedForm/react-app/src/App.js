@@ -28,6 +28,9 @@ class Form extends Component {
     if(form.checkValidity()) {
       form.submit();
       localStorage.setItem('StopTime', performance.now());
+    } else {
+      localStorage.setItem('StopTime', performance.now());
+      window.location.reload();
     }
   }
 
@@ -127,7 +130,7 @@ class Form extends Component {
     // -simpleForm: If true, the form will only contain one input at a time
     // and will loop through all input types
     const formsAmount = 100;
-    const simpleForm = true;
+    const simpleForm = false;
 
     localStorage.setItem('FormsAmount', formsAmount);
 

@@ -99,7 +99,7 @@
             case 'email':
                 return 'example@test.com';
             case 'tel':
-                return '0701234567';
+                return '5551234567';
             case 'url':
                 return 'http://www.exampleweb.ex';
             case 'number':

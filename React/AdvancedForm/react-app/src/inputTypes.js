@@ -11,7 +11,7 @@ const inputTypes = [
   },
   {
     "type": "tel",
-    "placeholder": "0701234567",
+    "placeholder": "5551234567",
     "label": "Phone"
   },
   {

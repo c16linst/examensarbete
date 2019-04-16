@@ -16,7 +16,7 @@ angular.module('app')
       type: 'tel',
       name: 'tel',
       label: 'Phone',
-      placeholder: '0701234567'
+      placeholder: '5551234567'
     },
     {
       type: 'url',

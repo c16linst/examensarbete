@@ -39,6 +39,7 @@
         if(localStorage.getItem('StartTime') != null) {
             if(localStorage.getItem('times') != null) times = JSON.parse(localStorage.getItem('times'));
             if(localStorage.getItem('FormSize') != null) formSize = JSON.parse(localStorage.getItem('FormSize'));
+            if(localStorage.getItem('InputType') != null) inputType = JSON.parse(localStorage.getItem('InputType'));
 
             var startTime = localStorage.getItem('StartTime');
             var stopTime = localStorage.getItem('StopTime');

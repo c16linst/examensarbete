@@ -26,9 +26,11 @@ class Form extends Component {
     // Manual validation is performed when pressing the submit button
     let form = this.formRef.current;
     if(form.checkValidity()) {
+      console.log('The form was submitted');
       form.submit();
       localStorage.setItem('StopTime', performance.now());
     } else {
+      console.log('The form was declined');
       localStorage.setItem('StopTime', performance.now());
       window.location.reload();
     }

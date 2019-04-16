@@ -20,7 +20,7 @@ app.component('customForm', {
       // Manually post the form if it's valid
       if($scope.form.$invalid) {
         localStorage.setItem('StopTime', performance.now());
-        console.log('Failed to submit form - form is invalid');
+        console.log('The form was declined');
         location.reload(true);
         return;
       } else if($scope.form.$valid) {
@@ -30,9 +30,10 @@ app.component('customForm', {
         })
         .then(function successCallback(res) {
           localStorage.setItem('StopTime', performance.now());
+          console.log('The form was submitted');
           location.reload(true);
         }, function errorCallback(res) {
-          console.log('Failed to submit form');
+          console.log('An error occurred - the form was not submitted');
         });
       }
     };

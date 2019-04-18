@@ -155,8 +155,6 @@ class Form extends Component {
   }
 
   render() {
-    let handleSubmit = this.handleSubmit;
-
     return (
       <form
         style={{display: 'flex', flexDirection: 'column', width: '150px'}}
@@ -169,7 +167,7 @@ class Form extends Component {
         </table>
         <Input
           type="submit"
-          handleSubmit={handleSubmit.bind(this)} />
+          handleSubmit={this.handleSubmit.bind(this)} />
 
       </form>
     );

@@ -6,8 +6,8 @@ app.controller('controller', function($scope) {
 
 app.component('customForm', {
   controller: function($scope, $http, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES) {
-    $scope.scriptsRun = getScriptsRun();
-    $scope.formIndex = getFormIndex();
+    $scope.scriptsRun = getFromLocalStorage('ScriptsRun');
+    $scope.formIndex = getFromLocalStorage('FormIndex');
 
     $scope.submit = function() {
       // Update localstorage for the TamperMonkey script
@@ -165,14 +165,13 @@ function change(input, scope) {
 }
 
 // Helper functions to get values from localstorage
-function getScriptsRun() {
-  var scriptsRun = JSON.parse(localStorage.getItem('ScriptsRun'));
-  scriptsRun = (scriptsRun == null) ? 1 : scriptsRun;
-  return scriptsRun;
-}
+function getFromLocalStorage(name) {
+  var value = JSON.parse(localStorage.getItem(name));
 
-function getFormIndex() {
-  var formIndex = JSON.parse(localStorage.getItem('FormIndex'));
-  formIndex = (formIndex == null) ? 0 : formIndex;
-  return formIndex;
+  if(value == null) {
+    if(name == 'ScriptsRun') value = 1;
+    else value = 0;
+  }
+
+  return value;
 }

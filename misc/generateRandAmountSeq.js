@@ -4,7 +4,7 @@
 var data = [];
 
 for(let i = 0; i < 10000; i++) {
-  data.push(Math.floor(Math.random() * 20 + 1));
+  data.push(Math.floor(Math.random() * 40 + 1));
 }
 
 var textFile = null;
@@ -21,7 +21,7 @@ var createFile = function(input) {
 };
 
 var a = document.createElement('a');
-a.setAttribute('download', 'random-numbers-10000-1-20.js');
+a.setAttribute('download', 'random-numbers-10000-1-40.js');
 a.setAttribute('href', createFile(data));
 document.body.appendChild(a);
 

@@ -49,8 +49,6 @@ class Form extends Component {
       for(let y = 0; y < inputAmount[i]; y++) {
         inputs[y] = type[y];
         formsMatrix[i] = inputs;
-
-        type.shift();
       }
     }
 

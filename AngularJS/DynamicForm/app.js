@@ -50,8 +50,6 @@ app.component('customForm', {
         for(let y = 0; y < INPUT_AMOUNT[i]; y++) {
           inputs[y] = INPUT_TYPE[y];
           formsMatrix[i] = inputs;
-
-          INPUT_TYPE.shift();
         }
       }
 

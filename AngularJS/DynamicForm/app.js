@@ -21,6 +21,7 @@ app.component('customForm', {
       if($scope.form.$invalid) {
         localStorage.setItem('StopTime', performance.now());
         console.log('The form was declined');
+        localStorage.setItem('Submitted', 'false');
         location.reload(true);
         return;
       } else if($scope.form.$valid) {
@@ -31,6 +32,7 @@ app.component('customForm', {
         .then(function successCallback(res) {
           localStorage.setItem('StopTime', performance.now());
           console.log('The form was submitted');
+          localStorage.setItem('Submitted', 'true');
           location.reload(true);
         }, function errorCallback(res) {
           console.log('An error occurred - the form was not submitted');

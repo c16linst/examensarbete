@@ -17,6 +17,7 @@ class Form extends Component {
     super(props);
 
     this.formRef = React.createRef();
+    this.submitted = JSON.parse(localStorage.getItem('Submitted'));
   }
 
   handleSubmit(e) {
@@ -28,12 +29,30 @@ class Form extends Component {
     if(form.checkValidity()) {
       console.log('The form was submitted');
       form.submit();
+
+      this.setSubmitted(this.submitted, 'true');
       localStorage.setItem('StopTime', performance.now());
     } else {
       console.log('The form was declined');
       localStorage.setItem('StopTime', performance.now());
+
+      this.setSubmitted(this.submitted, 'false');
       window.location.reload();
     }
+  }
+
+  setSubmitted(submitted, value) {
+    var submittedArray = [];
+
+    if(submitted == null) {
+      submittedArray[0] = value;
+    }
+    else {
+      submittedArray = submitted;
+      submittedArray.push(value);
+    }
+
+    localStorage.setItem('Submitted', JSON.stringify(submittedArray));
   }
 
   // Returns a matrix with a specified amount of forms that

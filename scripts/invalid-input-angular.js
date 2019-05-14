@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name        Measure Time for Invalid Input (AnuglarJS)
+// @name        Measure Time for Invalid Input (AngularJS)
 // @namespace   http://tampermonkey.net/
 // @version     0.1
 // @grant       none

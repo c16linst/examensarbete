@@ -10,7 +10,7 @@ app.component('customForm', {
     $scope.formIndex = getFromLocalStorage('FormIndex');
 
     $scope.submit = function() {
-      // Update localstorage for the TamperMonkey script
+      // Update localstorage for the Tampermonkey script
       $scope.scriptsRun++;
       $scope.formIndex++;
       localStorage.setItem('ScriptsRun', $scope.scriptsRun);
@@ -75,12 +75,40 @@ app.component('customForm', {
       return formsMatrix;
     };
 
+    $scope.generateRandomInputValue = function(type) {
+      switch(type) {
+        case 'text':
+          return new RandExp(/.{1,30}/gi).gen();
+        case 'email':
+          return new RandExp(/([a-z\d._-]{1,20})\@([a-z]{1,15})\.([a-z]{2,6})/gi).gen();
+        case 'tel':
+          return new RandExp(/\+?([\d- ]{1,30})/g).gen();
+        case 'url':
+          return new RandExp(/(http|https)(:\/\/)(www\.)?([a-z\d-]{1,10})\.([a-z\d-.?%_]{1,40})/gi).gen();
+        case 'number':
+          return new RandExp(/\d{1,30}/g).gen();
+        case 'password':
+          return new RandExp(/.{1,30}/gi).gen();
+        case 'datetime-local':
+          return new RandExp(/([0-9]{4})-(0(1|[3-9])|1[1-2])-(0[1-9]|1[1-9]|2[1-9]|30)T([0-1][0-9]|2[0-3]):([0-5][0-9])/g).gen();
+        case 'month':
+          return new RandExp(/([1-9][0-9]{3})-(0[1-9]|1[0-2])/g).gen();
+        case 'week':
+          return new RandExp(/([0-9]{4})-W(0[1-9]|[1-4][1-9]|5[0-2])/g).gen();
+        case 'search':
+          return new RandExp(/.{1,50}/gi).gen();
+        default:
+          return 'reached default';
+      }
+    }
+
     // Create a new array of forms with inputs inside, based on the formsMatrix
     $scope.generateInputs = function(formsMatrix) {
       var forms = [];
       var formSize = [];
       var types = [];
       var inputs = [];
+      var values = [];
 
       formsMatrix.forEach(function(form) {
         if(form.length > 0) {
@@ -93,20 +121,38 @@ app.component('customForm', {
           form.forEach(function(type, index) {
             var inputObject = INPUT_TYPES[type-1];
             inputs.push(inputObject);
+            types.push(inputObject.type);
           });
         } else {
           var inputObject = INPUT_TYPES[form-1];
           inputs.push(inputObject);
-
-          // InputType will be used to evaluate if the input's
-          // type makes a difference in the validation time
           types.push(inputObject.type);
-          localStorage.setItem('InputType', JSON.stringify(types));
         }
 
         forms.push(inputs);
         inputs = [];
       });
+
+      if($scope.scriptsRun == 1) {
+        // Generate random values to insert into the inputs from the script
+        var values = [];
+
+        types.forEach(function(type) {
+          values.push($scope.generateRandomInputValue(type));
+        });
+
+        localStorage.setItem('Values', JSON.stringify(values));
+
+        // InputType will be used to evaluate if the input's
+        // type makes a difference in the validation time
+        localStorage.setItem('InputType', JSON.stringify(types));
+
+        // Add the formsMatrix to local storage if it's the first time the code
+        // is executed, so it can be retrieved later on
+        localStorage.setItem('FormsMatrix', JSON.stringify(forms));
+      } else {
+        forms = JSON.parse(localStorage.getItem('FormsMatrix'));
+      }
 
       return forms;
     };

@@ -136,9 +136,11 @@ app.component('customForm', {
       if($scope.scriptsRun == 1) {
         // Generate random values to insert into the inputs from the script
         var values = [];
+        var validInput = localStorage.getItem('ValidInput');
 
         types.forEach(function(type) {
-          values.push($scope.generateRandomInputValue(type));
+          if(validInput) values.push($scope.generateRandomInputValue(type));
+          else values.push(new RandExp(/.{1,30}/gi).gen());
         });
 
         localStorage.setItem('Values', JSON.stringify(values));

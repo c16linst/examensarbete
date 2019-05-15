@@ -10,6 +10,8 @@
 (function() {
   var $ = window.jQuery;
 
+  localStorage.setItem('ValidInput', 'true');
+
   $(document).ready(function() {
     var inputIndex = localStorage.getItem('InputIndex');
     var startTime = localStorage.getItem('StartTime');
@@ -71,6 +73,7 @@
         data.push(times[i]);
       }
 
+      // Format the data to fit in a spreadsheet
       data = data.toString();
       data = data.replace(/([\[\]])/g, '');
       if(simpleForm) data = data.replace(/([A-Za-z]*[\,])([\d\.]*)([\,])/g, "$1$2\n");
@@ -90,31 +93,4 @@
       a.click();
     }
   });
-
-  function setValue(type) {
-    switch(type) {
-      case 'text':
-        return 'test text';
-      case 'email':
-        return 'example@test.com';
-      case 'tel':
-        return '5551234567';
-      case 'url':
-        return 'http://www.exampleweb.ex';
-      case 'number':
-        return '12345';
-      case 'password':
-        return 'password123';
-      case 'date':
-        return '2019-01-01T09:30';
-      case 'month':
-        return '2019-01';
-      case 'week':
-        return '2019-W01';
-      case 'search':
-        return 'search string';
-      default:
-        return 'reached default';
-    }
-  }
 })();

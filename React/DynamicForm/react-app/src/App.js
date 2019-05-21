@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { inputTypes } from './inputTypes.js';
-import { inputAmount } from './random-numbers-10000-1-40.js';
-import { inputType } from './random-numbers-10000-1-10.js';
+import { inputAmount } from './random-numbers-25000-1-40.js';
+import { inputType } from './random-numbers-25000-1-10.js';
 import './App.css';
 
 class App extends Component {
@@ -68,6 +68,8 @@ class Form extends Component {
       for(let y = 0; y < inputAmount[i]; y++) {
         inputs[y] = type[y];
         formsMatrix[i] = inputs;
+
+        type.shift();
       }
     }
 
@@ -148,7 +150,7 @@ class Form extends Component {
     // -formsAmount: Sets the amount of different forms that should exist
     // -simpleForm: If true, the form will only contain one input at a time
     // and will loop through all input types
-    const formsAmount = 100;
+    const formsAmount = 1000;
     const simpleForm = false;
 
     localStorage.setItem('FormsAmount', formsAmount);
@@ -158,6 +160,7 @@ class Form extends Component {
     else formsMatrix = this.createFormsMatrix(formsAmount);
 
     const forms = this.generateTableRows(formsMatrix);
+    console.log(formsMatrix);
 
     // formIndex will be set in the TamperMonkey script
     var formIndex = localStorage.getItem('FormIndex');

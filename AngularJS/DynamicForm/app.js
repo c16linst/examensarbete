@@ -5,7 +5,7 @@ app.controller('controller', function($scope) {
 })
 
 app.component('customForm', {
-  controller: function($scope, $http, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES, INPUT_VALUES) {
+  controller: function($scope, $http, INPUT_AMOUNT, INPUT_TYPE, INPUT_TYPES, INPUT_VALUES, INPUT_VALUES_SIMPLE) {
     $scope.scriptsRun = getFromLocalStorage('ScriptsRun');
     $scope.formIndex = getFromLocalStorage('FormIndex');
 
@@ -89,7 +89,7 @@ app.component('customForm', {
     };
 
     // Create a new array of forms with inputs inside, based on the formsMatrix
-    $scope.generateInputs = function(formsMatrix) {
+    $scope.generateInputs = function(formsMatrix, simpleForm) {
       var forms = [];
       var formSize = [];
       var types = [];
@@ -125,7 +125,22 @@ app.component('customForm', {
         // type makes a difference in the validation time
         localStorage.setItem('InputType', JSON.stringify(types));
         localStorage.setItem('FormsMatrix', JSON.stringify(forms));
-        localStorage.setItem('Values', JSON.stringify(INPUT_VALUES));
+
+        var validInput = JSON.parse(localStorage.getItem('ValidInput'));
+
+        if(validInput == 'true') {
+          if(simpleForm) localStorage.setItem('Values', JSON.stringify(INPUT_VALUES_SIMPLE));
+          else localStorage.setItem('Values', JSON.stringify(INPUT_VALUES));
+        }
+        else {
+          var values = [];
+
+          for(var i = 0; i < 25000; i++) {
+            values.push(new RandExp(/.{1,30}/gi).gen());
+          }
+
+          localStorage.setItem('Values', JSON.stringify(values));
+        }
       }
       // If it's not the first the the app is launched, the forms should
       // be retrieved from local storage
@@ -156,7 +171,7 @@ app.component('customForm', {
       var formsMatrix;
       if(simpleForm) formsMatrix = $scope.createSimpleFormsMatrix(formsAmount);
       else formsMatrix = $scope.createFormsMatrix(formsAmount);
-      const forms = $scope.generateInputs(formsMatrix);
+      const forms = $scope.generateInputs(formsMatrix, simpleForm);
 
       return forms[formIndex];
     };

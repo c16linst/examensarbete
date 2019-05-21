@@ -24,40 +24,35 @@
   ];
 
   var formsAmount = parseInt(localStorage.getItem('FormsAmount'));
-  parseInt(formsAmount);
-
   var simpleForm = JSON.parse(localStorage.getItem('SimpleForm'));
-
   var scriptsRun = localStorage.getItem('ScriptsRun');
+  var formIndex = localStorage.getItem('FormIndex');
+
+  if(formIndex == '' || formIndex == null) formIndex = 0;
   if(scriptsRun == null) scriptsRun = 1;
   parseInt(scriptsRun);
 
-  var formIndex = localStorage.getItem('FormIndex');
-  if(formIndex == '' || formIndex == null) formIndex = 0;
-
-  var times = [];
-  var formSize = [];
-  var inputType = [];
-
   $(document).ready(function() {
-    if(localStorage.getItem('StartTime') != null) {
-      if(localStorage.getItem('times') != null) times = JSON.parse(localStorage.getItem('times'));
-      if(localStorage.getItem('FormSize') != null) formSize = JSON.parse(localStorage.getItem('FormSize'));
-      if(localStorage.getItem('InputType') != null) inputType = JSON.parse(localStorage.getItem('InputType'));
+    var startTime = localStorage.getItem('StartTime');
+    var times = JSON.parse(localStorage.getItem('Times'));
+    var formSize = JSON.parse(localStorage.getItem('FormSize'));
+    var inputType = JSON.parse(localStorage.getItem('InputType'));
 
-      var startTime = localStorage.getItem('StartTime');
+    if(times == null) times = [];
+    if(formSize == null) formSize = [];
+    if(inputType == null) inputType = [];
+
+    // The total time can't be calculated unless there exists a start time
+    if(startTime != null) {
       var stopTime = localStorage.getItem('StopTime');
       var time = stopTime - startTime;
       localStorage.setItem('Time', time);
 
       times.push(time);
-      localStorage.setItem('times', JSON.stringify(times));
-    } else {
-      if(localStorage.getItem('times') != null) times = JSON.parse(localStorage.getItem('times'));
-      if(localStorage.getItem('FormSize') != null) formSize = JSON.parse(localStorage.getItem('FormSize'));
-      if(localStorage.getItem('InputType') != null) inputType = JSON.parse(localStorage.getItem('InputType'));
+      localStorage.setItem('Times', JSON.stringify(times));
     }
 
+    // Experiment has not finished executing
     if(scriptsRun <= formsAmount) {
       inputTypes.forEach(function(type) {
         $('input[type=' + type + ']').each(function() {
@@ -66,7 +61,9 @@
       });
 
       $('#submit-form').click();
-    } else if(scriptsRun > formsAmount) {
+    }
+    // Experiment has finished executing
+    else if(scriptsRun > formsAmount) {
       var textFile = null;
       var data = [];
 
@@ -76,17 +73,20 @@
         data.push(times[i]);
       }
 
+      // Format the data to fit in a spreadsheet
       data = data.toString();
       data = data.replace(/([\[\]])/g, '');
       if(simpleForm) data = data.replace(/([A-Za-z]*[\,])([\d\.]*)([\,])/g, "$1$2\n");
       else data = data.replace(/([\d\.]*)([\,])([\d\.]*)([\,])/g, "$1$2$3\n");
 
+      // Create file
       var createFile = function(input) {
         var blob = new Blob([input], { type: 'text/csv' });
         textFile = window.URL.createObjectURL(blob);
         return textFile;
       };
 
+      // Download file
       var a = document.createElement('a');
       a.setAttribute('download', 'data.csv');
       a.setAttribute('href', createFile(data));
@@ -96,6 +96,8 @@
     }
   });
 
+  // Increase how many scripts have been executed
+  // and which form is going to show
   $('#submit-form').on('click', function() {
     scriptsRun++;
     formIndex++;

@@ -25,22 +25,24 @@
       'search'
     ];
 
-    var inputType = [];
     var formsAmount = localStorage.getItem('FormsAmount');
     var scriptsRun = JSON.parse(localStorage.getItem('ScriptsRun'));
     var formIndex = JSON.parse(localStorage.getItem('FormIndex'));
     var simpleForm = JSON.parse(localStorage.getItem('SimpleForm'));
+    var inputType = JSON.parse(localStorage.getItem('InputType'));
 
     if(scriptsRun == null) scriptsRun = 1;
     if(formIndex == null) formIndex = 0;
+    if(inputType == null) inputType = [];
 
-    if(localStorage.getItem('InputType') != null) inputType = JSON.parse(localStorage.getItem('InputType'));
-
+    // Experiment has not finished executing
     if(scriptsRun <= formsAmount) {
       inputTypes.forEach(function(type) {
         var inputs = document.querySelectorAll('.' + type);
+
         inputs.forEach(function(input) {
           console.log('CURRENT INPUT TYPE: ' + type);
+
           $(input).focus();
           $(input).attr('ng-value', attackString);
           $(input).attr('value', attackString);
@@ -51,7 +53,9 @@
       });
 
       $('#submit-form').click();
-    } else if(scriptsRun > formsAmount) {
+    }
+    // Experiment has finished executing
+    else if(scriptsRun > formsAmount) {
       var textFile = null;
       var data = [];
 
@@ -60,17 +64,20 @@
         data.push(localStorage.getItem('Submitted'));
       }
 
+      // Format the data to fit in a spreadsheet
       data = data.toString();
       data = data.replace(/([\[\]])/g, '');
       if(simpleForm) data = data.replace(/([A-Za-z]*[\,])([\d\.]*)([\,])/g, "$1$2\n");
       else data = data.replace(/([\d\.]*)([\,])([\d\.]*)([\,])/g, "$1$2$3\n");
 
+      // Create file
       var createFile = function(input) {
         var blob = new Blob([input], { type: 'text/csv' });
         textFile = window.URL.createObjectURL(blob);
         return textFile;
       };
 
+      // Download file
       var a = document.createElement('a');
       a.setAttribute('download', 'data.csv');
       a.setAttribute('href', createFile(data));

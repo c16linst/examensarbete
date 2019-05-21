@@ -31,8 +31,8 @@
     if(formSize == null) formSize = [];
     if(inputType == null) inputType = [];
 
-    if(startTime != null)
-    {
+    // The total time can't be calculated unless there exists a start time
+    if(startTime != null) {
       var stopTime = localStorage.getItem('StopTime');
       var time = stopTime - startTime;
       localStorage.setItem('Time', time);
@@ -79,12 +79,14 @@
       if(simpleForm) data = data.replace(/([A-Za-z]*[\,])([\d\.]*)([\,])/g, "$1$2\n");
       else data = data.replace(/([\d\.]*)([\,])([\d\.]*)([\,])/g, "$1$2$3\n");
 
+      // Create file
       var createFile = function(input) {
         var blob = new Blob([input], { type: 'text/csv' });
         textFile = window.URL.createObjectURL(blob);
         return textFile;
       };
 
+      // Download file
       var a = document.createElement('a');
       a.setAttribute('download', 'data.csv');
       a.setAttribute('href', createFile(data));

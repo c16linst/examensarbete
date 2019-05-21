@@ -25,20 +25,18 @@
   ];
 
   var formsAmount = parseInt(localStorage.getItem('FormsAmount'));
-  parseInt(formsAmount);
-
   var scriptsRun = localStorage.getItem('ScriptsRun');
+  var formIndex = localStorage.getItem('FormIndex');
+
+  if(formIndex == '' || formIndex == null) formIndex = 0;
   if(scriptsRun == null) scriptsRun = 1;
   parseInt(scriptsRun);
 
-  var formIndex = localStorage.getItem('FormIndex');
-  if(formIndex == '' || formIndex == null) formIndex = 0;
-
-  var inputType = [];
-
   $(document).ready(function() {
-    if(localStorage.getItem('InputType') != null) inputType = JSON.parse(localStorage.getItem('InputType'));
+    var inputType = JSON.parse(localStorage.getItem('InputType'));
+    if(inputType == null) inputType = [];
 
+    // Experiment has not finished executing
     if(scriptsRun <= formsAmount) {
       inputTypes.forEach(function(type) {
         $('input[type=' + type + ']').each(function() {
@@ -48,7 +46,9 @@
       });
 
       $('#submit-form').click();
-    } else if(scriptsRun > formsAmount) {
+    }
+    // Experiment has finished executing
+    else if(scriptsRun > formsAmount) {
       var textFile = null;
       var data = [];
       var submitted = JSON.parse(localStorage.getItem('Submitted'));
@@ -58,15 +58,18 @@
         data.push(submitted[i]);
       }
 
+      // Format the data to fit in a spreadsheet
       data = data.toString();
       data = data.replace(/([A-Za-z]*[-]?[A-Za-z]*[\,])([A-Za-z]*)([\,])/g, "$1$2\n");
 
+      // Create file
       var createFile = function(input) {
         var blob = new Blob([input], { type: 'text/csv' });
         textFile = window.URL.createObjectURL(blob);
         return textFile;
       };
 
+      // Download file
       var a = document.createElement('a');
       a.setAttribute('download', 'data.csv');
       a.setAttribute('href', createFile(data));
@@ -76,6 +79,8 @@
     }
   });
 
+  // Increase how many scripts have been executed
+  // and which form is going to show
   $('#submit-form').on('click', function() {
     scriptsRun++;
     formIndex++;
